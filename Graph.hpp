@@ -12,12 +12,13 @@
 class Graph {
 private:
 	std::vector<std::vector<int>> liste_voisins;
-	int nb_sommets;
+	int nb_sommet;
 public:
-    Graph();
+    Graph(int n);
     ~Graph();
     void generation_aleatoire1();
     double frand_0_1();
+    void affiche();
 protected:
 
 };
