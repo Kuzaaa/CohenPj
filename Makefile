@@ -1,4 +1,4 @@
-COMPONENTS = .cpp
+COMPONENTS = Graph.cpp
 
 all: a.out clean
 
@@ -7,5 +7,3 @@ a.out: main.cpp $(COMPONENTS)
 
 clean:
 	rm -rf *.o
-
-
