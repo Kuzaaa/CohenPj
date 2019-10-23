@@ -6,7 +6,8 @@
 #include <ctime>
 #include <vector>
 
-/*graphe représenté par un vecteur de vecteurs, T[i] contiendra les voisins de i avec un n° sommet supérieur
+/* graphe représenté par un vecteur de vecteurs,
+ * T[i] contiendra les voisins de i avec un n° sommet supérieur
  * pour éviter la redondance
  */
 class Graph {
@@ -17,6 +18,7 @@ public:
     Graph(int n);
     ~Graph();
     void generation_aleatoire1();
+		void generation_aleatoire2();
     double frand_0_1();
     void affiche();
 protected:
