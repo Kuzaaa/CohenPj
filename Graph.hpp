@@ -14,11 +14,13 @@ class Graph {
 private:
 	std::vector<std::vector<int>> liste_voisins;
 	int nb_sommet;
+	std::vector<std::vector<int>> clique_maximal;
 public:
     Graph(int n);
     ~Graph();
     void generation_aleatoire1();
 		void generation_aleatoire2();
+		void BronKerbosch(std::vector<int> P, std::vector<int> R, std::vector<int> X);
     double frand_0_1();
     void affiche();
 protected:

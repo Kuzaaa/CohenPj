@@ -1,3 +1,5 @@
+#include <iterator>
+#include <algorithm>
 #include "Graph.hpp"
 
 using namespace std;
@@ -78,6 +80,47 @@ void Graph::generation_aleatoire2(){
   else{
     cout << "Pas assez de sommets, il en faut 3 minimum." << endl;
   }
+}
+
+void Graph::BronKerbosch(std::vector<int> P, std::vector<int> R, std::vector<int> X){
+
+	//Condition d'arrêt
+	if (P.empty() && X.empty()){
+		clique_maximal.push_back(P);
+	}
+
+	//Pour tous les sommets de P
+	for(auto sommet : P){
+		std::vector<int> newP, newR, newX;
+
+		//R⋃sommet
+		newR = R;
+		newR.push_back(sommet);
+
+		//P⋂⌈(sommet)
+		for(auto i : P){
+			auto result = std::find(std::begin(liste_voisins.at(sommet)),std::end(liste_voisins.at(sommet)),i);
+			if (result != std::end(liste_voisins.at(sommet))){
+				newP.push_back(i);
+			}
+		}
+
+		//P⋂⌈(sommet)
+		for(auto i : X){
+			auto result = std::find(std::begin(liste_voisins.at(sommet)),std::end(liste_voisins.at(sommet)),i);
+			if (result != std::end(liste_voisins.at(sommet))){
+				newX.push_back(i);
+			}
+		}
+
+		//Appel de récurrence
+		BronKerbosch(newP,newR,newX);
+
+		//P\sommet
+		P.erase(std::remove(P.begin(),P.end(),sommet), P.end());
+		//X⋃sommet
+		X.push_back(sommet);
+	}
 }
 
 double Graph::frand_0_1(){
