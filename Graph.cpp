@@ -73,6 +73,8 @@ void Graph::generation_aleatoire2(){
           }
         }
       }
+			vector<int> sommets;
+			liste_voisins.push_back(sommets);
     }
   }
 
