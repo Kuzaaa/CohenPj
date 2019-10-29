@@ -10,20 +10,24 @@ Graph::Graph(int n)  {
 Graph::~Graph() {}
 
 void Graph::generation_aleatoire1(){
-	double p = frand_0_1();
+	double p = frand_0_1(); //p flottant aléatoire entre 0 et 1
 	int sommet,voisin;
 	double p_apparition;
 	vector<int> voisins;
+
 	cout << "p=" << p << endl;
-	for(sommet=0;sommet<nb_sommet;sommet++){
-		for(voisin=sommet+1;voisin<nb_sommet;voisin++){
-			p_apparition = frand_0_1();
+
+	for(sommet=0;sommet<nb_sommet;sommet++){ //pour chaque sommet
+		for(voisin=sommet+1;voisin<nb_sommet;voisin++){ //pour chaque voisin potentiel
+			p_apparition = frand_0_1();//probabilité d'apparition aléatoire entre 0 et 1
+
 			cout << "sommet:" << sommet <<"voisin:" << voisin << "p=" << p_apparition << endl;
+
 			if(p_apparition <= p){
-				voisins.push_back(voisin);
+				voisins.push_back(voisin); //on ajoute le voisin
 			}
 		}
-		liste_voisins.push_back(voisins);
+		liste_voisins.push_back(voisins); //on ajoute la liste de voisins du sommet
 		voisins.clear();
 	}
 }
