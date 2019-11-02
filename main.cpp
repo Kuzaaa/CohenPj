@@ -9,5 +9,7 @@ int main(){
 	srand(time(NULL));
 	graphe.generation_aleatoire2();
 	graphe.affiche();
+	graphe.degeneracy();
+
 	return 0;
 }

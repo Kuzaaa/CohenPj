@@ -125,6 +125,86 @@ void Graph::BronKerbosch(std::vector<int> P, std::vector<int> R, std::vector<int
 	}
 }
 
+void Graph::degeneracy(){
+	int i;
+
+	//liste degres sommet par sommet a update
+	std::vector<std::vector<int>> degrestmp;
+
+	//init degres tmp a num sommet et 0
+	for(unsigned int i = 0; i<liste_voisins.size(); i++){
+		std::vector<int> desc_sommet;
+		desc_sommet.push_back((int)i);
+		desc_sommet.push_back(0);
+		degrestmp.push_back(desc_sommet);
+	}
+
+	//calcule des degres des sommets
+	i = 0;
+	for(auto voisins : liste_voisins){
+		for(auto sommet : voisins){
+			degrestmp[i][1]++;
+			degrestmp[sommet][1]++;
+		}
+		i++;
+	}
+
+	for(unsigned int j = 0; j<liste_voisins.size(); j++){
+
+		//Liste de degres
+		std::vector<std::vector<int>> D;
+
+		//init de D
+		for(auto sommet : degrestmp){
+			std::vector<int> desc_sommet;
+			D.push_back(desc_sommet);
+		}
+
+		//Remplissage de D
+		i=0;
+		for(auto sommet : degrestmp){
+			if(sommet[1] != -1){
+				D[sommet[1]].push_back(i);
+			}
+			i++;
+		}
+
+		int cpt = 0;
+
+		//tant que D[cpt] est vide on passe a cpt+1
+		while(cpt<nb_sommet && D[cpt].empty() == 1){
+			cpt++;
+		}
+
+		//Test si cpt < nb_sommet
+		//Cas D !(empty)
+		if(cpt < nb_sommet){
+
+			//ajoute le premier sommet trouvé dans ordre
+			list_degeneracy.push_back(D[cpt][0]);
+			degrestmp[list_degeneracy[list_degeneracy.size()-1]][1] = -1;
+
+			i=0;
+			for(auto voisins : liste_voisins){
+				for(auto sommet : voisins){
+
+					if(sommet == list_degeneracy[list_degeneracy.size()-1] and degrestmp[i][1] != -1){
+						degrestmp[i][1]--;
+					}
+				}
+				i++;
+			}
+
+		}
+	}
+	cout << "List degeneracy : ";
+	for(auto entier : list_degeneracy){
+
+		cout << entier << ", ";
+	}
+	cout << endl;
+}
+
 double Graph::frand_0_1(){
 	return rand()/(double)RAND_MAX ;
 }
