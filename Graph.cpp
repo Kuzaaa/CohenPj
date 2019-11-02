@@ -151,6 +151,8 @@ void Graph::degeneracy(){
 
 	for(unsigned int j = 0; j<liste_voisins.size(); j++){
 
+		i=0;
+
 		//Liste de degres
 		std::vector<std::vector<int>> D;
 
@@ -187,14 +189,15 @@ void Graph::degeneracy(){
 			i=0;
 			for(auto voisins : liste_voisins){
 				for(auto sommet : voisins){
-
-					if(sommet == list_degeneracy[list_degeneracy.size()-1] and degrestmp[i][1] != -1){
+					if(sommet == list_degeneracy[list_degeneracy.size()-1] && degrestmp[i][1] != -1){
 						degrestmp[i][1]--;
+					}
+					if(list_degeneracy[list_degeneracy.size()-1] == i && degrestmp[sommet][1] != -1){
+						degrestmp[sommet][1]--;
 					}
 				}
 				i++;
 			}
-
 		}
 	}
 	cout << "List degeneracy : ";
