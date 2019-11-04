@@ -10,6 +10,7 @@ int main(){
 	graphe.generation_aleatoire2();
 	graphe.affiche();
 	graphe.degeneracy();
+	graphe.bron_kerbosch_degeneracy();
 
 	return 0;
 }

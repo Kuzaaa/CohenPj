@@ -25,8 +25,9 @@ public:
 	void BronKerbosch(std::vector<int> P, std::vector<int> R, std::vector<int> X);
     double frand_0_1();
     void affiche();
-    //V = Liste_voisins
     void degeneracy();
+    void bron_kerbosch_degeneracy();
+    void bron_kerbosch_pivot(std::vector<int> P, std::vector<int> R, std::vector<int> X);
 protected:
 
 };
