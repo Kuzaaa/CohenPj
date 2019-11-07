@@ -91,6 +91,7 @@
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
 		<project id="CohenPj.cdt.managedbuild.target.gnu.mingw.exe.1304832147" name="Executable" projectType="cdt.managedbuild.target.gnu.mingw.exe"/>
 	</storageModule>
+<<<<<<< HEAD
 <<<<<<< Upstream, based on origin/master
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
@@ -109,6 +110,8 @@
 	</storageModule>
 =======
 >>>>>>> 6292e5f aaaaah
+=======
+>>>>>>> branch 'tests_solenn' of https://github.com/Kuzaaa/CohenPj.git
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
 		<buildTargets>
@@ -140,5 +143,8 @@
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
 	</storageModule>
+<<<<<<< HEAD
 >>>>>>> 6292e5f aaaaah
+=======
+>>>>>>> branch 'tests_solenn' of https://github.com/Kuzaaa/CohenPj.git
 </cproject>
