@@ -11,7 +11,7 @@ Graph::Graph(int n)  {
 Graph::~Graph() {}
 
 void Graph::generation_aleatoire1(){
-	double p = 1;//frand_0_1(); //p flottant aléatoire entre 0 et 1
+	double p = frand_0_1(); //p flottant aléatoire entre 0 et 1
 	int sommet,voisin;
 	double p_apparition;
 	vector<int> voisins;
@@ -40,7 +40,7 @@ void Graph::generation_aleatoire1(){
 
 void Graph::generation_aleatoire2(){
 	double p, p_apparition;
-	int i(0), degeneracy(2), sommet, voisin, nb_tot_degres(0), deg[nb_sommet];
+	int i(0), m(2), sommet, voisin, nb_tot_degres(0), deg[nb_sommet];
 	vector<int> voisins;
 
 	//Initialise un tableau de degrés
@@ -83,7 +83,7 @@ void Graph::generation_aleatoire2(){
 					nb_tot_degres+=2;
 					i++;
 					//Si on a créé 2 nouvelles arêtes, on passe au sommet suivant
-					if(i==degeneracy){
+					if(i==m){
 						voisin=sommet;
 					}
 				}
@@ -112,61 +112,28 @@ void Graph::BronKerbosch(std::vector<int> P, std::vector<int> R, std::vector<int
 		//R⋃sommet
 		newR = R;
 		newR.push_back(sommet);
-		cout << "List newR : ";
-
-		for(auto entier : newR){
-
-			cout << entier << ", ";
-		}
-		cout << endl;
 
 		//P⋂⌈(sommet)
-		//cout << "BOUCLE NEWP: taille P: " << (int)P.size() << endl;
 		for(auto i : P){
-			auto result = std::find(liste_voisins[sommet].begin(), liste_voisins[sommet].end(), i);
+			auto result = find(liste_voisins[sommet].begin(), liste_voisins[sommet].end(), i);
 		    if (result != liste_voisins[sommet].end()) {
 				newP.push_back(i);
 			}
 		}
-		cout << "List newP : ";
-		for(auto entier : newP){
-
-			cout << entier << ", ";
-		}
-		cout << endl;
 
 		//X⋂⌈(sommet)
 		for(auto i : X){
-			auto result = std::find(liste_voisins[sommet].begin(),liste_voisins[sommet].end(),i);
+			auto result = find(liste_voisins[sommet].begin(),liste_voisins[sommet].end(),i);
 			if (result != liste_voisins[sommet].end()){
 				newX.push_back(i);
 			}
 		}
-		cout << "List newX : ";
-		for(auto entier : newX){
-
-			cout << entier << ", ";
-		}
-		cout << endl;
 
 		//Appel de récurrence
 		BronKerbosch(newP,newR,newX);
 
 		//P\sommet
-		cout << "sommet :" << sommet << endl;
-		cout << "List P avant effacer : ";
-				for(auto entier : P){
-
-					cout << entier << ", ";
-				}
-				cout << endl;
-		P.erase(std::remove(P.begin(), P.end(), sommet), P.end());
-		cout << "List P après effacer : ";
-						for(auto entier : P){
-
-							cout << entier << ", ";
-						}
-						cout << endl;
+		P.erase(remove(P.begin(), P.end(), sommet), P.end());
 
 		//X⋃sommet
 		X.push_back(sommet);
