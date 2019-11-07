@@ -29,5 +29,7 @@ int main(){
 		cout << "]" << endl;
 	}
 
+	graphe.degeneracy();
+
 	return 0;
 }
