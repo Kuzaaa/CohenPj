@@ -189,6 +189,9 @@ void Graph::degeneracy(){
 
 			//ajoute le premier sommet trouvé dans ordre
 			list_degen.push_back(D[cpt][0]);
+			if(k_degen < degrestmp[D[cpt][0]]){
+				k_degen = degrestmp[D[cpt][0]];
+			}
 			degrestmp[list_degen[list_degen.size()-1]] = -1;
 
 			i=0;
@@ -197,14 +200,12 @@ void Graph::degeneracy(){
 					if(sommet == list_degen[list_degen.size()-1] && degrestmp[i] != -1){
 						degrestmp[i]--;
 					}
-					if(list_degen[list_degen.size()-1] == i && degrestmp[sommet] != -1){
-						degrestmp[sommet]--;
-					}
 				}
 				i++;
 			}
 		}
 	}
+	cout << "k : " << k_degen << endl;
 	cout << "List degeneracy : ";
 	for(auto entier : list_degen){
 
