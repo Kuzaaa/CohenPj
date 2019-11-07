@@ -421,7 +421,21 @@ void Graph::maximal_clique_enumeration1(){
 	for(int j=0;j<nb_sommet;j++){
 		//clique maximale de G(j)
 		//for(chaque clique maximale K){
+
 			//ordonner les sommets
+			int occ[nb_sommet]={0};
+			vector<int> k_ordonne;
+			for(auto i : K){
+				occ[i]=1;
+			}
+			for(auto i : ordre){
+				if(occ[i]!=0){
+					k_ordonne.push_back(i);
+					occ[i]=0;
+				}
+			}
+
+			//chercher K dans T
 			try {
 				//accéder à l'élément grâce à la hash
 			}
