@@ -217,11 +217,16 @@ void Graph::degeneracy(){
 		if(cpt < nb_sommet){
 
 			//ajoute le premier sommet trouv� dans ordre
+<<<<<<< Upstream, based on origin/master
 			list_degen.push_back(D[cpt][0]);
 			if(k_degen < degrestmp[D[cpt][0]]){
 				k_degen = degrestmp[D[cpt][0]];
 			}
 			degrestmp[list_degen[list_degen.size()-1]] = -1;
+=======
+			list_degeneracy.push_back(D[cpt][0]);
+			degrestmp[list_degeneracy[list_degeneracy.size()-1]] = -1;
+>>>>>>> 11e1aba debut mannoussakis
 
 			i=0;
 			for(auto voisins : liste_voisins){
@@ -243,6 +248,7 @@ void Graph::degeneracy(){
 	cout << endl;
 }
 
+<<<<<<< Upstream, based on origin/master
 void Graph::bron_kerbosch_degeneracy(){
 
 	int j;
@@ -408,6 +414,12 @@ void Graph::bron_kerbosch_pivot(std::vector<int> P, std::vector<int> R, std::vec
 			X.push_back(v);*/
 		}
 	}
+=======
+void Graph::maximal_clique_enumeration1(){
+	//k-degen et ordre de degen
+	//liste adjacente degenrescence
+
+>>>>>>> 11e1aba debut mannoussakis
 }
 
 double Graph::frand_0_1(){
