@@ -11,7 +11,7 @@ Graph::Graph(int n)  {
 Graph::~Graph() {}
 
 void Graph::generation_aleatoire1(){
-	double p = 0.5;//frand_0_1(); //p flottant aléatoire entre 0 et 1
+	double p = 1;//frand_0_1(); //p flottant aléatoire entre 0 et 1
 	int sommet,voisin;
 	double p_apparition;
 	vector<int> voisins;
@@ -131,7 +131,7 @@ void Graph::BronKerbosch(std::vector<int> P, std::vector<int> R, std::vector<int
 		cout << endl;
 
 		//P⋂⌈(sommet)
-		for(auto i : X){
+		for(int i=0; i<(int) P.size(); i++){
 			auto result = std::find(liste_voisins[sommet].begin(),liste_voisins[sommet].end(),i);
 			if (result != liste_voisins[sommet].end()){
 				newX.push_back(i);
@@ -148,7 +148,7 @@ void Graph::BronKerbosch(std::vector<int> P, std::vector<int> R, std::vector<int
 		BronKerbosch(newP,newR,newX);
 
 		//P\sommet
-		P.erase(std::remove(P.begin(), P.end(), sommet), P.end());
+		//P.erase(std::remove(P.begin(), P.end(), sommet), P.end());
 
 		//X⋃sommet
 		X.push_back(sommet);
