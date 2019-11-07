@@ -9,7 +9,7 @@ int main(){
 	vector<int> R;
 	vector<int> X;
 
-	Graph graphe(4);
+	Graph graphe(6);
 	srand(time(NULL));
 	graphe.generation_aleatoire1();
 
@@ -28,10 +28,10 @@ int main(){
 		}
 		cout << "]" << endl;
 	}
-
-	//graphe.degeneracy();
-	//graphe.liste_adj_degen();
-	//graphe.bron_kerbosch_degeneracy();
+	graphe.clique_maximal.clear();
+	graphe.degeneracy();
+	graphe.liste_adj_degen();
+	graphe.bron_kerbosch_degeneracy();
 
 	return 0;
 }

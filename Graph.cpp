@@ -11,7 +11,7 @@ Graph::Graph(int n)  {
 Graph::~Graph() {}
 
 void Graph::generation_aleatoire1(){
-	double p = frand_0_1(); //p flottant aléatoire entre 0 et 1
+	double p = 0.5;//frand_0_1(); //p flottant aléatoire entre 0 et 1
 	int sommet,voisin;
 	double p_apparition;
 	vector<int> voisins;
@@ -244,47 +244,38 @@ void Graph::degeneracy(){
 }
 
 void Graph::bron_kerbosch_degeneracy(){
-
-	int j;
-
 	for(auto i : list_degen){
 		std::vector<int> P;
 		std::vector<int> X;
 		for(auto sommet : liste_voisins[i]){
-			P.push_back(sommet);
-		}
-		j = 0;
-		for(auto voisins : liste_voisins){
-			for(auto sommet : voisins){
-				if(sommet == i){
-					X.push_back(j);
-				}
+			if(sommet > i){
+				P.push_back(sommet);
 			}
-			j++;
+			else if (sommet < i){
+				X.push_back(sommet);
+			}
 		}
+
+		/*
 		//Print X et P au cas ou
 		cout << "i: " << i << endl;
 		cout << "P: ";
 		for(auto tmp : P){
-			cout << tmp;
+			cout << tmp << ", ";
 		}
 		cout << endl;
 		cout << "X: ";
 		for(auto tmp : X){
-			cout << tmp;
+			cout << tmp << ", ";
 		}
-		cout << endl << endl;
+		cout << endl << endl;*/
 
-
-
-		//Later :
 		std::vector<int> R;
 		R.push_back(i);
 		bron_kerbosch_pivot(P, R, X);
-
-
 	}
-	cout << endl;
+
+	cout << "List clique maximale (degeneracy / pivot) : " << endl;
 	for(auto clique : clique_maximal){
 		cout << "[ ";
 		for(auto sommet : clique){
@@ -294,10 +285,10 @@ void Graph::bron_kerbosch_degeneracy(){
 	}
 }
 
-void Graph::bron_kerbosch_pivot(std::vector<int> P, std::vector<int> R, std::vector<int> X){
+void Graph::bron_kerbosch_pivot(vector<int> P, vector<int> R, vector<int> X){
 
 	//P union X
-	std::vector<int> PuX;
+	vector<int> PuX;
 	for(auto sommetP : P){
 		PuX.push_back(sommetP);
 	}
@@ -330,7 +321,7 @@ void Graph::bron_kerbosch_pivot(std::vector<int> P, std::vector<int> R, std::vec
 
 		//P/voisins(u)
 		int test;
-		std::vector<int> P_sans_voisins_u;
+		vector<int> P_sans_voisins_u;
 		for(auto p : P){
 			test = 1;
 			for(auto sommet : liste_voisins[best_pivot]){
@@ -343,69 +334,41 @@ void Graph::bron_kerbosch_pivot(std::vector<int> P, std::vector<int> R, std::vec
 			}
 		}
 
-		for(auto v : P_sans_voisins_u){
+		int v;
 
-			std::vector<int> P_n_voisins_v;
-			/*
-			for(auto sommet : liste_voisins[v]){
-				for(auto p : P){
-					if(sommet == p){
-						P_n_voisins_v.push_back(sommet);
-					}
-				}
-			}*/
+		while(!P_sans_voisins_u.empty()){
+			v = P_sans_voisins_u[0];
 
-			std::vector<int> X_n_voisins_v;
-			/*
-			for(auto sommet : liste_voisins[v]){
-				for(auto x : X){
-					if(sommet == x){
-						X_n_voisins_v.push_back(sommet);
-					}
-				}
-			}*/
-
+			vector<int> P_n_voisins_v;
 
 			//P⋂⌈(sommet)
 			for(auto i : P){
-				auto result = std::find(std::begin(liste_voisins.at(v)),std::end(liste_voisins.at(v)),i);
-				if (result != std::end(liste_voisins.at(v))){
-					P_n_voisins_v.push_back(i);
+				auto result = find(liste_voisins[v].begin(), liste_voisins[v].end(), i);
+			    if (result != liste_voisins[v].end()) {
+			    	P_n_voisins_v.push_back(i);
 				}
 			}
 
-			//P⋂⌈(sommet)
+			vector<int> X_n_voisins_v;
+			//X⋂⌈(sommet)
 			for(auto i : X){
-				auto result = std::find(std::begin(liste_voisins.at(v)),std::end(liste_voisins.at(v)),i);
-				if (result != std::end(liste_voisins.at(v))){
+				auto result = find(liste_voisins[v].begin(),liste_voisins[v].end(),i);
+				if (result != liste_voisins[v].end()){
 					X_n_voisins_v.push_back(i);
 				}
 			}
 
-			R.push_back(v);
+			vector<int> newR = R;
+			newR.push_back(v);
 
-			cout << endl;
-			cout << "[ ";
-			for(auto sommet : R){
-				cout << sommet << ", ";
-			}
-			cout << "]" << endl;
-
-
-			bron_kerbosch_pivot(P_n_voisins_v, R, X_n_voisins_v);
+			bron_kerbosch_pivot(P_n_voisins_v, newR, X_n_voisins_v);
 
 
 			//P \ sommet
-			P.erase(std::remove(P.begin(),P.end(),v), P.end());
+			P.erase(remove(P.begin(), P.end(), v), P.end());
+			P_sans_voisins_u.erase(remove(P_sans_voisins_u.begin(), P_sans_voisins_u.end(), v), P_sans_voisins_u.end());
 			//X u sommet
 			X.push_back(v);
-			/*
-			for(auto it = P.begin(); it != P.end(); it++){
-				if(*it == v){
-					P.erase(it);
-				}
-			}
-			X.push_back(v);*/
 		}
 	}
 }
