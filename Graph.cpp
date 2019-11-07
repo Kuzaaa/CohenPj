@@ -101,14 +101,14 @@ void Graph::BronKerbosch(std::vector<int> P, std::vector<int> R, std::vector<int
 	}
 
 	//Pour tous les sommets de P
-	for(int sommet=0;sommet<(int)P.size();sommet++){
-		cout << "BOUCLE 1: taille P: " << (int)P.size() << endl;
+	for(auto sommet : P){
 		std::vector<int> newP, newR, newX;
 
 		//R⋃sommet
 		newR = R;
 		newR.push_back(sommet);
 		cout << "List newR : ";
+
 		for(auto entier : newR){
 
 			cout << entier << ", ";
@@ -117,7 +117,7 @@ void Graph::BronKerbosch(std::vector<int> P, std::vector<int> R, std::vector<int
 
 		//P⋂⌈(sommet)
 		//cout << "BOUCLE NEWP: taille P: " << (int)P.size() << endl;
-		for(int i=sommet;i<(int)P.size();i++){
+		for(auto i : P){
 			auto result = std::find(liste_voisins[sommet].begin(), liste_voisins[sommet].end(), i);
 		    if (result != liste_voisins[sommet].end()) {
 				newP.push_back(i);
@@ -148,8 +148,8 @@ void Graph::BronKerbosch(std::vector<int> P, std::vector<int> R, std::vector<int
 		BronKerbosch(newP,newR,newX);
 
 		//P\sommet
-		//auto result = std::find(liste_voisins[sommet].begin(), liste_voisins[sommet].end(), sommet);
-		//std::remove(P.begin(),P.end(),sommet);
+		P.erase(std::remove(P.begin(), P.end(), sommet), P.end());
+
 		//X⋃sommet
 		X.push_back(sommet);
 	}
