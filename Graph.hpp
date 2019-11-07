@@ -28,13 +28,11 @@ public:
     double frand_0_1();
     void affiche();
     void degeneracy();
-<<<<<<< Upstream, based on origin/master
     void bron_kerbosch_degeneracy();
     void bron_kerbosch_pivot(std::vector<int> P, std::vector<int> R, std::vector<int> X);
     void liste_adj_degen();
-=======
     void maximal_clique_enumeration1();
->>>>>>> 11e1aba debut mannoussakis
+
 protected:
 
 };
