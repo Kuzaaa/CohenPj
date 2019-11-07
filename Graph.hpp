@@ -21,6 +21,7 @@ public:
 	int nb_sommet;
 
     Graph(int n);
+	Graph(int i, Graph graphe);//Construit un sous graphe avec i et voisins de i > i
     ~Graph();
     void generation_aleatoire1();
 	void generation_aleatoire2();
