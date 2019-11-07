@@ -29,7 +29,7 @@ int main(){
 		cout << "]" << endl;
 	}
 
-	graphe.degeneracy();
+	//graphe.degeneracy();
 	//graphe.bron_kerbosch_degeneracy();
 
 	return 0;
