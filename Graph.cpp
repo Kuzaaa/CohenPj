@@ -217,16 +217,11 @@ void Graph::degeneracy(){
 		if(cpt < nb_sommet){
 
 			//ajoute le premier sommet trouv� dans ordre
-<<<<<<< HEAD
 			list_degen.push_back(D[cpt][0]);
 			if(k_degen < degrestmp[D[cpt][0]]){
 				k_degen = degrestmp[D[cpt][0]];
 			}
 			degrestmp[list_degen[list_degen.size()-1]] = -1;
-=======
-			list_degeneracy.push_back(D[cpt][0]);
-			degrestmp[list_degeneracy[list_degeneracy.size()-1]] = -1;
->>>>>>> branch 'Solenn' of https://github.com/Kuzaaa/CohenPj.git
 
 			i=0;
 			for(auto voisins : liste_voisins){
@@ -248,7 +243,6 @@ void Graph::degeneracy(){
 	cout << endl;
 }
 
-<<<<<<< HEAD
 
 void Graph::bron_kerbosch_degeneracy(){
 
@@ -418,8 +412,6 @@ void Graph::bron_kerbosch_pivot(std::vector<int> P, std::vector<int> R, std::vec
 }
 
 
-=======
->>>>>>> branch 'Solenn' of https://github.com/Kuzaaa/CohenPj.git
 void Graph::maximal_clique_enumeration1(){
 	//k-degen et ordre de degen
 	//liste adjacente degenrescence
