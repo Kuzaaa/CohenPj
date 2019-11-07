@@ -133,22 +133,19 @@ void Graph::degeneracy(){
 	int i;
 
 	//liste degres sommet par sommet a update
-	std::vector<std::vector<int>> degrestmp;
+	vector<int> degrestmp;
 
 	//init degres tmp a num sommet et 0
 	for(unsigned int i = 0; i<liste_voisins.size(); i++){
-		std::vector<int> desc_sommet;
-		desc_sommet.push_back((int)i);
-		desc_sommet.push_back(0);
-		degrestmp.push_back(desc_sommet);
+		degrestmp.push_back(0);
 	}
 
 	//calcule des degres des sommets
 	i = 0;
 	for(auto voisins : liste_voisins){
 		for(auto sommet : voisins){
-			degrestmp[i][1]++;
-			degrestmp[sommet][1]++;
+			degrestmp[i]++;
+			degrestmp[sommet]++;
 		}
 		i++;
 	}
@@ -158,19 +155,19 @@ void Graph::degeneracy(){
 		i=0;
 
 		//Liste de degres
-		std::vector<std::vector<int>> D;
+		vector<vector<int>> D;
 
 		//init de D
-		for(auto sommet : degrestmp){
-			std::vector<int> desc_sommet;
+		for(unsigned int cpt = 0; cpt<degrestmp.size(); cpt++){
+			vector<int> desc_sommet;
 			D.push_back(desc_sommet);
 		}
 
 		//Remplissage de D
 		i=0;
 		for(auto sommet : degrestmp){
-			if(sommet[1] != -1){
-				D[sommet[1]].push_back(i);
+			if(sommet != -1){
+				D[sommet].push_back(i);
 			}
 			i++;
 		}
@@ -186,18 +183,18 @@ void Graph::degeneracy(){
 		//Cas D !(empty)
 		if(cpt < nb_sommet){
 
-			//ajoute le premier sommet trouvï¿½ dans ordre
+			//ajoute le premier sommet trouvé dans ordre
 			list_degeneracy.push_back(D[cpt][0]);
-			degrestmp[list_degeneracy[list_degeneracy.size()-1]][1] = -1;
+			degrestmp[list_degeneracy[list_degeneracy.size()-1]] = -1;
 
 			i=0;
 			for(auto voisins : liste_voisins){
 				for(auto sommet : voisins){
-					if(sommet == list_degeneracy[list_degeneracy.size()-1] && degrestmp[i][1] != -1){
-						degrestmp[i][1]--;
+					if(sommet == list_degeneracy[list_degeneracy.size()-1] && degrestmp[i] != -1){
+						degrestmp[i]--;
 					}
-					if(list_degeneracy[list_degeneracy.size()-1] == i && degrestmp[sommet][1] != -1){
-						degrestmp[sommet][1]--;
+					if(list_degeneracy[list_degeneracy.size()-1] == i && degrestmp[sommet] != -1){
+						degrestmp[sommet]--;
 					}
 				}
 				i++;
