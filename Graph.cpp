@@ -11,7 +11,7 @@ Graph::Graph(int n)  {
 Graph::~Graph() {}
 
 void Graph::generation_aleatoire1(){
-	double p = 1;//frand_0_1(); //p flottant aléatoire entre 0 et 1
+	double p = frand_0_1(); //p flottant aléatoire entre 0 et 1
 	int sommet,voisin;
 	double p_apparition;
 	vector<int> voisins;
@@ -48,17 +48,22 @@ void Graph::generation_aleatoire2(){
 		deg[cpt] = 0;
 	}
 
+	//initialise les listes de voisins
+	for(sommet=0;sommet<nb_sommet;sommet++){
+		vector<int> sommets;
+		liste_voisins.push_back(sommets);
+	}
+
 	//Initialise le graphe triangle de départ
 	if(nb_sommet>=3){
 		for(sommet=0;sommet<3;sommet++){
 			for(voisin=sommet+1;voisin<3;voisin++){
-				voisins.push_back(voisin);
+				liste_voisins[sommet].push_back(voisin);
+				liste_voisins[voisin].push_back(sommet);
 				deg[sommet]++;
 				deg[voisin]++;
 				nb_tot_degres+=2;
 			}
-			liste_voisins.push_back(voisins);
-			voisins.clear();
 		}
 
 		//Pour chaque nouveau sommet
@@ -71,7 +76,8 @@ void Graph::generation_aleatoire2(){
 				cout << "sommet:" << sommet <<" voisin:" << voisin << " p_app=" << p_apparition << " p="<< p << endl;
 				if(p<p_apparition){
 					//On ajoute la nouvelle arête
-					liste_voisins.at(voisin).push_back(sommet);
+					liste_voisins[voisin].push_back(sommet);
+					liste_voisins[sommet].push_back(voisin);
 					deg[sommet]++;
 					deg[voisin]++;
 					nb_tot_degres+=2;
@@ -82,8 +88,6 @@ void Graph::generation_aleatoire2(){
 					}
 				}
 			}
-	vector<int> sommets;
-	liste_voisins.push_back(sommets);
 		}
 	}
 
