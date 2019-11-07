@@ -28,19 +28,18 @@ Graph::Graph(int i, Graph graphe){
 		}
 	}
 
-	for(auto L : liste_voisins){
-		std::vector<int>::iterator it = L.begin();
-		while (it != L.end()) {
-			cout << "*it: " << *it << " < i: " << i << "?" << endl;
-	   		if (/*(*it > maxSommet)||*/(*it > i)){
-				cout << "yes" << endl;
-	       		it = L.erase(it);
+	vector<vector<int>> newListe_voisins;
+	for(auto L: liste_voisins){
+		vector<int> newListe;
+		for(auto element: L){
+			if((element<=maxSommet)&&(element>=i)){
+				newListe.push_back(element);
 			}
-	   		else
-	       		++it;
 		}
+		newListe_voisins.push_back(newListe);
 	}
 
+	liste_voisins = newListe_voisins;
 	nb_sommet = (int) valSommet.size();
 }
 
