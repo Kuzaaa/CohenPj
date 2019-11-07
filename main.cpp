@@ -12,8 +12,7 @@ int main(){
 	Graph graphe(6);
 	srand(time(NULL));
 	graphe.generation_aleatoire1();
-	graphe.affiche();
-	/*
+
 	for(int i=0; i<graphe.nb_sommet; i++){
 		P.push_back(i);
 	}
@@ -29,9 +28,9 @@ int main(){
 		}
 		cout << "]" << endl;
 	}
-	*/
-	graphe.degeneracy();
-	graphe.liste_adj_degen();
+
+	//graphe.degeneracy();
+	//graphe.liste_adj_degen();
 	//graphe.bron_kerbosch_degeneracy();
 
 	return 0;

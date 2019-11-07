@@ -110,16 +110,20 @@ void Graph::BronKerbosch(std::vector<int> P, std::vector<int> R, std::vector<int
 
 		//P⋂⌈(sommet)
 		for(auto i : P){
+			cout << "voisin de " << sommet << ": " << i << endl;
 			auto result = std::find(liste_voisins[sommet].begin(), liste_voisins[sommet].end(), i);
 		    if (result != liste_voisins[sommet].end()) {
+				cout << "trouvé" << endl;
 				newP.push_back(i);
 			}
 		}
 
 		//P⋂⌈(sommet)
 		for(auto i : X){
-			auto result = std::find(std::begin(liste_voisins[sommet]),std::end(liste_voisins[sommet]),i);
-			if (result != std::end(liste_voisins[sommet])){
+			cout << "voisin de " << sommet << ": " << i << endl;
+			auto result = std::find(liste_voisins[sommet].begin(),liste_voisins[sommet].end(),i);
+			if (result != liste_voisins[sommet].end()){
+				cout << "trouvé" << endl;
 				newX.push_back(i);
 			}
 		}
@@ -210,7 +214,7 @@ void Graph::degeneracy(){
 		//Cas D !(empty)
 		if(cpt < nb_sommet){
 
-			//ajoute le premier sommet trouv� dans ordre
+			//ajoute le premier sommet trouv� dans ordre
 			list_degen.push_back(D[cpt][0]);
 			if(k_degen < degrestmp[D[cpt][0]]){
 				k_degen = degrestmp[D[cpt][0]];
