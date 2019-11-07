@@ -13,11 +13,17 @@
 class Graph {
 private:
 	std::vector<std::vector<int>> liste_voisins;
+<<<<<<< HEAD
 	int nb_sommet;
 	std::vector<std::vector<int>> clique_maximal;
 	std::vector<int> list_degen;
 	int k_degen;
+=======
+	std::vector<int> list_degeneracy;
+>>>>>>> branch 'master' of https://github.com/Kuzaaa/CohenPj.git
 public:
+	std::vector<std::vector<int>> clique_maximal;
+	int nb_sommet;
 
     Graph(int n);
     ~Graph();
