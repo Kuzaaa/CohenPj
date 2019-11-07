@@ -96,7 +96,7 @@ void Graph::BronKerbosch(std::vector<int> P, std::vector<int> R, std::vector<int
 
 	//Condition d'arrêt
 	if (P.empty() && X.empty()){
-		clique_maximal.push_back(P);
+		clique_maximal.push_back(R);
 	}
 
 	//Pour tous les sommets de P
@@ -109,16 +109,16 @@ void Graph::BronKerbosch(std::vector<int> P, std::vector<int> R, std::vector<int
 
 		//P⋂⌈(sommet)
 		for(auto i : P){
-			auto result = std::find(std::begin(liste_voisins.at(sommet)),std::end(liste_voisins.at(sommet)),i);
-			if (result != std::end(liste_voisins.at(sommet))){
+			auto result = std::find(liste_voisins[sommet].begin(), liste_voisins[sommet].end(), i);
+		    if (result != liste_voisins[sommet].end()) {
 				newP.push_back(i);
-			}
+		    }
 		}
 
 		//P⋂⌈(sommet)
 		for(auto i : X){
-			auto result = std::find(std::begin(liste_voisins.at(sommet)),std::end(liste_voisins.at(sommet)),i);
-			if (result != std::end(liste_voisins.at(sommet))){
+			auto result = std::find(std::begin(liste_voisins[sommet]),std::end(liste_voisins[sommet]),i);
+			if (result != std::end(liste_voisins[sommet])){
 				newX.push_back(i);
 			}
 		}

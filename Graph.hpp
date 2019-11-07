@@ -13,10 +13,10 @@
 class Graph {
 private:
 	std::vector<std::vector<int>> liste_voisins;
-	int nb_sommet;
-	std::vector<std::vector<int>> clique_maximal;
 	std::vector<int> list_degeneracy;
 public:
+	std::vector<std::vector<int>> clique_maximal;
+	int nb_sommet;
 
     Graph(int n);
     ~Graph();
