@@ -8,6 +8,42 @@ Graph::Graph(int n)  {
 	nb_sommet = n;
 	k_degen = 0;
 }
+
+Graph::Graph(int i, Graph graphe){
+	int maxSommet(i);
+	vector<int> valSommet;
+	liste_voisins.push_back(graphe.liste_voisins[i]);
+	valSommet.push_back(i);
+
+	//On stock tous les voisins inferieurs dans une liste.
+	//Avec leur indice, on peut retrouver leur valeur.
+	//De plus, on initialise les listes_voisins
+	for(auto voisin : graphe.liste_voisins[i]){
+		if(i<voisin){
+			if(voisin>maxSommet){
+				maxSommet=voisin;
+			}
+			liste_voisins.push_back(graphe.liste_voisins[voisin]);
+			valSommet.push_back(voisin);
+		}
+	}
+
+	for(auto L : liste_voisins){
+		std::vector<int>::iterator it = L.begin();
+		while (it != L.end()) {
+			cout << "*it: " << *it << " < i: " << i << "?" << endl;
+	   		if (/*(*it > maxSommet)||*/(*it > i)){
+				cout << "yes" << endl;
+	       		it = L.erase(it);
+			}
+	   		else
+	       		++it;
+		}
+	}
+
+	nb_sommet = (int) valSommet.size();
+}
+
 Graph::~Graph() {}
 
 void Graph::generation_aleatoire1(){
