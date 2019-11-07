@@ -15,6 +15,7 @@ private:
 	std::vector<std::vector<int>> liste_voisins;
 	std::vector<int> list_degen;
 	int k_degen;
+	std::vector<std::vector<int>> liste_adj_d;
 public:
 	std::vector<std::vector<int>> clique_maximal;
 	int nb_sommet;
@@ -29,6 +30,7 @@ public:
     void degeneracy();
     void bron_kerbosch_degeneracy();
     void bron_kerbosch_pivot(std::vector<int> P, std::vector<int> R, std::vector<int> X);
+    void liste_adj_degen();
 protected:
 
 };

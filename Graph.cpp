@@ -134,6 +134,29 @@ void Graph::BronKerbosch(std::vector<int> P, std::vector<int> R, std::vector<int
 	}
 }
 
+void Graph::liste_adj_degen(){
+	for(int i  = 0; i<nb_sommet; i++){
+		vector<int> voisins_degen;
+		for(auto it = list_degen.rbegin(); it != list_degen.rend(); it++){
+			for(auto sommet : liste_voisins[i]){
+				if(*it == sommet){
+					voisins_degen.push_back(sommet);
+				}
+			}
+		}
+
+		liste_adj_d.push_back(voisins_degen);
+	}
+	cout << endl;
+	for(auto voisins : liste_adj_d){
+		cout << "[ ";
+		for(auto sommet : voisins){
+			cout << sommet << ", ";
+		}
+		cout << "]" << endl;
+	}
+}
+
 void Graph::degeneracy(){
 	int i;
 
