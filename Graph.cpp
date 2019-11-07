@@ -10,7 +10,7 @@ Graph::Graph(int n)  {
 Graph::~Graph() {}
 
 void Graph::generation_aleatoire1(){
-	double p = frand_0_1(); //p flottant aléatoire entre 0 et 1
+	double p = 0.5;//frand_0_1(); //p flottant aléatoire entre 0 et 1
 	int sommet,voisin;
 	double p_apparition;
 	vector<int> voisins;
@@ -35,7 +35,6 @@ void Graph::generation_aleatoire1(){
 		}
 	}
 }
-
 
 void Graph::generation_aleatoire2(){
 	double p, p_apparition;
@@ -147,9 +146,8 @@ void Graph::degeneracy(){
 	//calcule des degres des sommets
 	i = 0;
 	for(auto voisins : liste_voisins){
-		for(auto sommet : voisins){
+		for(unsigned int cpt = 0; cpt<voisins.size(); cpt++){
 			degrestmp[i]++;
-			degrestmp[sommet]++;
 		}
 		i++;
 	}
@@ -188,17 +186,14 @@ void Graph::degeneracy(){
 		if(cpt < nb_sommet){
 
 			//ajoute le premier sommet trouv� dans ordre
-			list_degeneracy.push_back(D[cpt][0]);
-			degrestmp[list_degeneracy[list_degeneracy.size()-1]] = -1;
+			list_degen.push_back(D[cpt][0]);
+			degrestmp[list_degen[list_degen.size()-1]] = -1;
 
 			i=0;
 			for(auto voisins : liste_voisins){
 				for(auto sommet : voisins){
-					if(sommet == list_degeneracy[list_degeneracy.size()-1] && degrestmp[i] != -1){
+					if(sommet == list_degen[list_degen.size()-1] && degrestmp[i] != -1){
 						degrestmp[i]--;
-					}
-					if(list_degeneracy[list_degeneracy.size()-1] == i && degrestmp[sommet] != -1){
-						degrestmp[sommet]--;
 					}
 				}
 				i++;
@@ -206,7 +201,7 @@ void Graph::degeneracy(){
 		}
 	}
 	cout << "List degeneracy : ";
-	for(auto entier : list_degeneracy){
+	for(auto entier : list_degen){
 
 		cout << entier << ", ";
 	}

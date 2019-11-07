@@ -15,7 +15,8 @@ private:
 	std::vector<std::vector<int>> liste_voisins;
 	int nb_sommet;
 	std::vector<std::vector<int>> clique_maximal;
-	std::vector<int> list_degeneracy;
+	std::vector<int> list_degen;
+	int k_degen;
 public:
 
     Graph(int n);
