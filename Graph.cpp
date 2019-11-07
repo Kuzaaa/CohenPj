@@ -11,7 +11,7 @@ Graph::Graph(int n)  {
 Graph::~Graph() {}
 
 void Graph::generation_aleatoire1(){
-	double p = frand_0_1(); //p flottant aléatoire entre 0 et 1
+	double p = 1;//frand_0_1(); //p flottant aléatoire entre 0 et 1
 	int sommet,voisin;
 	double p_apparition;
 	vector<int> voisins;
@@ -105,7 +105,8 @@ void Graph::BronKerbosch(std::vector<int> P, std::vector<int> R, std::vector<int
 	}
 
 	//Pour tous les sommets de P
-	for(auto sommet : P){
+	while (!P.empty()){
+		int sommet = P[0];
 		std::vector<int> newP, newR, newX;
 
 		//R⋃sommet
@@ -134,8 +135,8 @@ void Graph::BronKerbosch(std::vector<int> P, std::vector<int> R, std::vector<int
 		}
 		cout << endl;
 
-		//P⋂⌈(sommet)
-		for(int i=0; i<(int) P.size(); i++){
+		//X⋂⌈(sommet)
+		for(auto i : X){
 			auto result = std::find(liste_voisins[sommet].begin(),liste_voisins[sommet].end(),i);
 			if (result != liste_voisins[sommet].end()){
 				newX.push_back(i);
@@ -152,7 +153,20 @@ void Graph::BronKerbosch(std::vector<int> P, std::vector<int> R, std::vector<int
 		BronKerbosch(newP,newR,newX);
 
 		//P\sommet
-		//P.erase(std::remove(P.begin(), P.end(), sommet), P.end());
+		cout << "sommet :" << sommet << endl;
+		cout << "List P avant effacer : ";
+				for(auto entier : P){
+
+					cout << entier << ", ";
+				}
+				cout << endl;
+		P.erase(std::remove(P.begin(), P.end(), sommet), P.end());
+		cout << "List P après effacer : ";
+						for(auto entier : P){
+
+							cout << entier << ", ";
+						}
+						cout << endl;
 
 		//X⋃sommet
 		X.push_back(sommet);
