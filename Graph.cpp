@@ -1,5 +1,7 @@
 #include <iterator>
 #include <algorithm>
+#include <unordered_map>
+#include <stdexcept>
 #include "Graph.hpp"
 
 using namespace std;
@@ -415,6 +417,20 @@ void Graph::bron_kerbosch_pivot(std::vector<int> P, std::vector<int> R, std::vec
 void Graph::maximal_clique_enumeration1(){
 	//k-degen et ordre de degen
 	//liste adjacente degenrescence
+	unordered_map<int,vector<int>> T;
+	for(int j=0;j<nb_sommet;j++){
+		//clique maximale de G(j)
+		//for(chaque clique maximale K){
+			//ordonner les sommets
+			try {
+				//accéder à l'élément grâce à la hash
+			}
+			catch (const out_of_range& oor){
+				//insérer hash de K dans T
+				//print K
+			}
+		//}
+	}
 
 }
 
