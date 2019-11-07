@@ -9,7 +9,7 @@ int main(){
 	vector<int> R;
 	vector<int> X;
 
-	Graph graphe(6);
+	Graph graphe(4);
 	srand(time(NULL));
 	graphe.generation_aleatoire1();
 

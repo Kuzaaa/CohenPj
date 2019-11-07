@@ -101,38 +101,55 @@ void Graph::BronKerbosch(std::vector<int> P, std::vector<int> R, std::vector<int
 	}
 
 	//Pour tous les sommets de P
-	for(auto sommet : P){
+	for(int sommet=0;sommet<(int)P.size();sommet++){
+		cout << "BOUCLE 1: taille P: " << (int)P.size() << endl;
 		std::vector<int> newP, newR, newX;
 
 		//R⋃sommet
 		newR = R;
 		newR.push_back(sommet);
+		cout << "List newR : ";
+		for(auto entier : newR){
+
+			cout << entier << ", ";
+		}
+		cout << endl;
 
 		//P⋂⌈(sommet)
-		for(auto i : P){
-			cout << "voisin de " << sommet << ": " << i << endl;
+		//cout << "BOUCLE NEWP: taille P: " << (int)P.size() << endl;
+		for(int i=sommet;i<(int)P.size();i++){
 			auto result = std::find(liste_voisins[sommet].begin(), liste_voisins[sommet].end(), i);
 		    if (result != liste_voisins[sommet].end()) {
-				cout << "trouvé" << endl;
 				newP.push_back(i);
 			}
 		}
+		cout << "List newP : ";
+		for(auto entier : newP){
+
+			cout << entier << ", ";
+		}
+		cout << endl;
 
 		//P⋂⌈(sommet)
 		for(auto i : X){
-			cout << "voisin de " << sommet << ": " << i << endl;
 			auto result = std::find(liste_voisins[sommet].begin(),liste_voisins[sommet].end(),i);
 			if (result != liste_voisins[sommet].end()){
-				cout << "trouvé" << endl;
 				newX.push_back(i);
 			}
 		}
+		cout << "List newX : ";
+		for(auto entier : newX){
+
+			cout << entier << ", ";
+		}
+		cout << endl;
 
 		//Appel de récurrence
 		BronKerbosch(newP,newR,newX);
 
 		//P\sommet
-		P.erase(std::remove(P.begin(),P.end(),sommet), P.end());
+		//auto result = std::find(liste_voisins[sommet].begin(), liste_voisins[sommet].end(), sommet);
+		//std::remove(P.begin(),P.end(),sommet);
 		//X⋃sommet
 		X.push_back(sommet);
 	}
