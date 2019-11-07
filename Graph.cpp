@@ -17,6 +17,11 @@ void Graph::generation_aleatoire1(){
 
 	cout << "p=" << p << endl;
 
+	for(sommet=0;sommet<nb_sommet;sommet++){
+		vector<int> liste;
+		liste_voisins.push_back(liste);
+	}
+
 	for(sommet=0;sommet<nb_sommet;sommet++){ //pour chaque sommet
 		for(voisin=sommet+1;voisin<nb_sommet;voisin++){ //pour chaque voisin potentiel
 			p_apparition = frand_0_1();//probabilité d'apparition aléatoire entre 0 et 1
@@ -24,11 +29,10 @@ void Graph::generation_aleatoire1(){
 			cout << "sommet:" << sommet <<"voisin:" << voisin << "p=" << p_apparition << endl;
 
 			if(p_apparition <= p){
-				voisins.push_back(voisin); //on ajoute le voisin
+				liste_voisins[sommet].push_back(voisin); //on ajoute le voisin dans le sommet
+				liste_voisins[voisin].push_back(sommet); //on ajoute le sommet dans le voisin
 			}
 		}
-		liste_voisins.push_back(voisins); //on ajoute la liste de voisins du sommet
-		voisins.clear();
 	}
 }
 

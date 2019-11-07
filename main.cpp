@@ -7,7 +7,7 @@ using namespace std;
 int main(){
 	Graph graphe(6);
 	srand(time(NULL));
-	graphe.generation_aleatoire2();
+	graphe.generation_aleatoire1();
 	graphe.affiche();
 	graphe.degeneracy();
 
