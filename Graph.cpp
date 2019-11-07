@@ -6,16 +6,22 @@ using namespace std;
 
 Graph::Graph(int n)  {
 	nb_sommet = n;
+	k_degen = 0;
 }
 Graph::~Graph() {}
 
 void Graph::generation_aleatoire1(){
-	double p = frand_0_1(); //p flottant aléatoire entre 0 et 1
+	double p = 0.5;//frand_0_1(); //p flottant aléatoire entre 0 et 1
 	int sommet,voisin;
 	double p_apparition;
 	vector<int> voisins;
 
 	cout << "p=" << p << endl;
+
+	for(sommet=0;sommet<nb_sommet;sommet++){
+		vector<int> liste;
+		liste_voisins.push_back(liste);
+	}
 
 	for(sommet=0;sommet<nb_sommet;sommet++){ //pour chaque sommet
 		for(voisin=sommet+1;voisin<nb_sommet;voisin++){ //pour chaque voisin potentiel
@@ -24,68 +30,67 @@ void Graph::generation_aleatoire1(){
 			cout << "sommet:" << sommet <<"voisin:" << voisin << "p=" << p_apparition << endl;
 
 			if(p_apparition <= p){
-				voisins.push_back(voisin); //on ajoute le voisin
+				liste_voisins[sommet].push_back(voisin); //on ajoute le voisin dans le sommet
+				liste_voisins[voisin].push_back(sommet); //on ajoute le sommet dans le voisin
 			}
 		}
-		liste_voisins.push_back(voisins); //on ajoute la liste de voisins du sommet
-		voisins.clear();
 	}
 }
 
 
 void Graph::generation_aleatoire2(){
-  double p, p_apparition;
-  int i(0), degeneracy(2), sommet, voisin, nb_tot_degres(0), deg[nb_sommet];
-  vector<int> voisins;
+	double p, p_apparition;
+	int i(0), degeneracy(2), sommet, voisin, nb_tot_degres(0), deg[nb_sommet];
+	vector<int> voisins;
 
-  //Initialise un tableau de degrés
-  for(auto cpt=0; cpt<nb_sommet; cpt++){
-    deg[cpt] = 0;
-  }
+	//Initialise un tableau de degrés
+	for(auto cpt=0; cpt<nb_sommet; cpt++){
+		deg[cpt] = 0;
+	}
 
-  //Initialise le graphe triangle de départ
-  if(nb_sommet>=3){
-    for(sommet=0;sommet<3;sommet++){
-      for(voisin=sommet+1;voisin<3;voisin++){
-        voisins.push_back(voisin);
-        deg[sommet]++;
-        deg[voisin]++;
-        nb_tot_degres+=2;
-      }
-      liste_voisins.push_back(voisins);
-  		voisins.clear();
-    }
+	//Initialise le graphe triangle de départ
+	if(nb_sommet>=3){
+		for(sommet=0;sommet<3;sommet++){
+			for(voisin=sommet+1;voisin<3;voisin++){
+				voisins.push_back(voisin);
+				deg[sommet]++;
+				deg[voisin]++;
+				nb_tot_degres+=2;
+			}
+			liste_voisins.push_back(voisins);
+			voisins.clear();
+		}
 
-    //Pour chaque nouveau sommet
-    for(sommet=3;sommet<nb_sommet;sommet++){
-      i=0;
-      //On essaye de le lier aux sommets existants dans le graphe
-      for(voisin=0; voisin<sommet; voisin++){
-        p_apparition = (double) deg[voisin]/ (double) nb_tot_degres;
-        p = frand_0_1();
-        cout << "sommet:" << sommet <<" voisin:" << voisin << " p_app=" << p_apparition << " p="<< p << endl;
-        if(p<p_apparition){
-          //On ajoute la nouvelle arête
-          liste_voisins.at(voisin).push_back(sommet);
-          deg[sommet]++;
-          deg[voisin]++;
-          nb_tot_degres+=2;
-          i++;
-          //Si on a créé 2 nouvelles arêtes, on passe au sommet suivant
-          if(i==degeneracy){
-            voisin=sommet;
-          }
-        }
-      }
+		//Pour chaque nouveau sommet
+		for(sommet=3;sommet<nb_sommet;sommet++){
+			i=0;
+			//On essaye de le lier aux sommets existants dans le graphe
+			for(voisin=0; voisin<sommet; voisin++){
+				p_apparition = (double) deg[voisin]/ (double) nb_tot_degres;
+				p = frand_0_1();
+				cout << "sommet:" << sommet <<" voisin:" << voisin << " p_app=" << p_apparition << " p="<< p << endl;
+				if(p<p_apparition){
+					//On ajoute la nouvelle arête
+					liste_voisins.at(voisin).push_back(sommet);
+					deg[sommet]++;
+					deg[voisin]++;
+					nb_tot_degres+=2;
+					i++;
+					//Si on a créé 2 nouvelles arêtes, on passe au sommet suivant
+					if(i==degeneracy){
+						voisin=sommet;
+					}
+				}
+			}
 	vector<int> sommets;
 	liste_voisins.push_back(sommets);
-    }
-  }
+		}
+	}
 
-  //Sinon il n'y a pas assez de sommet pour le graphe triangle initial
-  else{
-    cout << "Pas assez de sommets, il en faut 3 minimum." << endl;
-  }
+	//Sinon il n'y a pas assez de sommet pour le graphe triangle initial
+	else{
+		cout << "Pas assez de sommets, il en faut 3 minimum." << endl;
+	}
 }
 
 void Graph::BronKerbosch(std::vector<int> P, std::vector<int> R, std::vector<int> X){
@@ -105,16 +110,16 @@ void Graph::BronKerbosch(std::vector<int> P, std::vector<int> R, std::vector<int
 
 		//P⋂⌈(sommet)
 		for(auto i : P){
-			auto result = std::find(std::begin(liste_voisins.at(sommet)),std::end(liste_voisins.at(sommet)),i);
-			if (result != std::end(liste_voisins.at(sommet))){
+			auto result = std::find(liste_voisins[sommet].begin(), liste_voisins[sommet].end(), i);
+		    if (result != liste_voisins[sommet].end()) {
 				newP.push_back(i);
 			}
 		}
 
 		//P⋂⌈(sommet)
 		for(auto i : X){
-			auto result = std::find(std::begin(liste_voisins.at(sommet)),std::end(liste_voisins.at(sommet)),i);
-			if (result != std::end(liste_voisins.at(sommet))){
+			auto result = std::find(std::begin(liste_voisins[sommet]),std::end(liste_voisins[sommet]),i);
+			if (result != std::end(liste_voisins[sommet])){
 				newX.push_back(i);
 			}
 		}
@@ -143,9 +148,8 @@ void Graph::degeneracy(){
 	//calcule des degres des sommets
 	i = 0;
 	for(auto voisins : liste_voisins){
-		for(auto sommet : voisins){
+		for(unsigned int cpt = 0; cpt<voisins.size(); cpt++){
 			degrestmp[i]++;
-			degrestmp[sommet]++;
 		}
 		i++;
 	}
@@ -184,16 +188,16 @@ void Graph::degeneracy(){
 		if(cpt < nb_sommet){
 
 			//ajoute le premier sommet trouv� dans ordre
-			list_degeneracy.push_back(D[cpt][0]);
-			degrestmp[list_degeneracy[list_degeneracy.size()-1]] = -1;
+			list_degen.push_back(D[cpt][0]);
+			degrestmp[list_degen[list_degen.size()-1]] = -1;
 
 			i=0;
 			for(auto voisins : liste_voisins){
 				for(auto sommet : voisins){
-					if(sommet == list_degeneracy[list_degeneracy.size()-1] && degrestmp[i] != -1){
+					if(sommet == list_degen[list_degen.size()-1] && degrestmp[i] != -1){
 						degrestmp[i]--;
 					}
-					if(list_degeneracy[list_degeneracy.size()-1] == i && degrestmp[sommet] != -1){
+					if(list_degen[list_degen.size()-1] == i && degrestmp[sommet] != -1){
 						degrestmp[sommet]--;
 					}
 				}
@@ -202,7 +206,7 @@ void Graph::degeneracy(){
 		}
 	}
 	cout << "List degeneracy : ";
-	for(auto entier : list_degeneracy){
+	for(auto entier : list_degen){
 
 		cout << entier << ", ";
 	}
@@ -213,7 +217,7 @@ void Graph::bron_kerbosch_degeneracy(){
 
 	int j;
 
-	for(auto i : list_degeneracy){
+	for(auto i : list_degen){
 		std::vector<int> P;
 		std::vector<int> X;
 		for(auto sommet : liste_voisins[i]){
