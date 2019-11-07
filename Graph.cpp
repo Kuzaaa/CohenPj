@@ -187,7 +187,7 @@ void Graph::degeneracy(){
 		//Cas D !(empty)
 		if(cpt < nb_sommet){
 
-			//ajoute le premier sommet trouvé dans ordre
+			//ajoute le premier sommet trouvï¿½ dans ordre
 			list_degeneracy.push_back(D[cpt][0]);
 			degrestmp[list_degeneracy[list_degeneracy.size()-1]] = -1;
 
@@ -211,6 +211,12 @@ void Graph::degeneracy(){
 		cout << entier << ", ";
 	}
 	cout << endl;
+}
+
+void Graph::maximal_clique_enumeration1(){
+	//k-degen et ordre de degen
+	//liste adjacente degenrescence
+
 }
 
 double Graph::frand_0_1(){

@@ -27,6 +27,7 @@ public:
     void affiche();
     //V = Liste_voisins
     void degeneracy();
+    void maximal_clique_enumeration1();
 protected:
 
 };
