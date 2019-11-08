@@ -1,7 +1,6 @@
 #include <iterator>
 #include <algorithm>
-#include <unordered_map>
-#include <stdexcept>
+#include <unordered_set>
 #include "Graph.hpp"
 
 using namespace std;
@@ -415,12 +414,23 @@ void Graph::bron_kerbosch_pivot(std::vector<int> P, std::vector<int> R, std::vec
 
 
 void Graph::maximal_clique_enumeration1(){
-	//k-degen et ordre de degen
-	//liste adjacente degenrescence
-	unordered_map<int,vector<int>> T;
+	degeneracy();
+	cout << "k=" << k_degen << endl;
+	liste_adj_degen();
+	cout << "liste adjacence degen : " << endl;
+	for(auto voisins : liste_adj_d){
+		cout << "[ ";
+		for(auto sommet : voisins){
+			cout << sommet << ", ";
+		}
+		cout << "]" << endl;
+	}
+	unordered_set<vector<int>> T;
 	for(int j=0;j<nb_sommet;j++){
 		//clique maximale de G(j)
-		//for(chaque clique maximale K){
+		Graph sous_graphe = Graph(j,this);
+		sous_graphe.bron_kerbosch_degeneracy();
+		for(auto K : sous_graphe.clique_maximal){
 
 			//ordonner les sommets
 			int occ[nb_sommet]={0};
@@ -428,7 +438,7 @@ void Graph::maximal_clique_enumeration1(){
 			for(auto i : K){
 				occ[i]=1;
 			}
-			for(auto i : ordre){
+			for(auto i : this->list_degen){
 				if(occ[i]!=0){
 					k_ordonne.push_back(i);
 					occ[i]=0;
@@ -436,16 +446,20 @@ void Graph::maximal_clique_enumeration1(){
 			}
 
 			//chercher K dans T
-			try {
-				//accéder à l'élément grâce à la hash
+			auto recherche = T.find(k_ordonne);
+			if (recherche == T.end()){ //pas de match
+				T.insert(k_ordonne); //insérer K dans T
+				cout << "liste adjacence degen : " << endl;
+				for(auto voisins : K){
+					cout << "[ ";
+					for(auto sommet : voisins){
+						cout << sommet << ", ";
+					}
+					cout << "]" << endl;
+				}
 			}
-			catch (const out_of_range& oor){
-				//insérer hash de K dans T
-				//print K
-			}
-		//}
+		}
 	}
-
 }
 
 double Graph::frand_0_1(){
