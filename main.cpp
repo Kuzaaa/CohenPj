@@ -11,16 +11,17 @@ int main(){
 
 	Graph graphe(6);
 	srand(time(NULL));
-	graphe.generation_aleatoire1();
+	graphe.generation_aleatoire2();
+	graphe.maximal_clique_enumeration1();
 
-	for(int i=0; i<graphe.nb_sommet; i++){
+	/*for(int i=0; i<graphe.nb_sommet; i++){
 		P.push_back(i);
 	}
 	graphe.affiche();
 
 	cout << "Graphe2: avec sommet 3:" << endl;
 	Graph graphe2(3,graphe);
-	graphe2.affiche();
+	graphe2.affiche();*/
 
 	//graphe.degeneracy();
 	//graphe.liste_adj_degen();

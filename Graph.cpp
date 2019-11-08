@@ -11,7 +11,7 @@ Graph::Graph(int n)  {
 	k_degen = 0;
 }
 
-Graph::Graph(int i, Graph graphe){
+Graph::Graph(Graph graphe,int i){
 	int maxSommet(i);
 	k_degen = 0;
 	liste_voisins.push_back(graphe.liste_voisins[i]);
@@ -502,7 +502,9 @@ void Graph::maximal_clique_enumeration1(){
 	MySet T;
 	for(int j=0;j<nb_sommet;j++){
 		//clique maximale de G(j)
-		Graph sous_graphe(j);
+		Graph sous_graphe(*this,j);
+		cout << "sous graphe de " << j << endl;
+		sous_graphe.affiche();
 		sous_graphe.bron_kerbosch_degeneracy();
 		for(auto K : sous_graphe.clique_maximal){
 

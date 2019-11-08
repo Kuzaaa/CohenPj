@@ -33,7 +33,7 @@ public:
 	int nb_sommet;
 
     Graph(int n);
-	Graph(int i, Graph graphe);//Construit un sous graphe avec i et voisins de i > i
+	Graph(Graph graphe, int i);//Construit un sous graphe avec i et voisins de i > i
     ~Graph();
 	std::vector<int> formatOrigin(std::vector<int> liste);
     void generation_aleatoire1();
