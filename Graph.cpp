@@ -30,9 +30,10 @@ Graph::Graph(int i, Graph graphe){
 	vector<vector<int>> newListe_voisins;
 	for(auto L: liste_voisins){
 		vector<int> newListe;
-		for(auto element: L){
-			if((element<=maxSommet)&&(element>=i)){
-				newListe.push_back(element);
+		for(auto i : L){
+			auto result = find(correspondanceOrignFct.begin(), correspondanceOrignFct.end(), i);
+		    if (result != correspondanceOrignFct.end()) {
+				newListe.push_back(i);
 			}
 		}
 		newListe_voisins.push_back(newListe);
@@ -75,8 +76,9 @@ vector<int> Graph::formatOrigin(vector<int> liste){
 	vector<int> newListe;
 
 	for(int k=0;k<(int) liste.size();k++){
-		newListe.push_back(correspondanceOrignFct[k]);
+		newListe.push_back(correspondanceOrignFct[liste[k]]);
 	}
+
 	return newListe;
 }
 
