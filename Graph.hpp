@@ -35,8 +35,7 @@ public:
     Graph(int n);
 	Graph(int i, Graph graphe);//Construit un sous graphe avec i et voisins de i > i
     ~Graph();
-	std::vector<int> formatFct(std::vector<int> listeOrigin);
-	std::vector<int> formatOrigin(std::vector<int> listeFct);
+	std::vector<int> formatOrigin(std::vector<int> liste);
     void generation_aleatoire1();
 	void generation_aleatoire2();
 	void BronKerbosch(std::vector<int> P, std::vector<int> R, std::vector<int> X);
