@@ -16,7 +16,7 @@ private:
 	std::vector<int> list_degen;
 	int k_degen;
 	std::vector<std::vector<int>> liste_adj_d;
-	std::vector<int> correspondanceOrignFct();
+	std::vector<int> correspondanceOrignFct;
 public:
 	std::vector<std::vector<int>> clique_maximal;
 	int nb_sommet;
@@ -24,8 +24,7 @@ public:
     Graph(int n);
 	Graph(int i, Graph graphe);//Construit un sous graphe avec i et voisins de i > i
     ~Graph();
-	std::vector<int> formatFct(std::vector<int> listeOrigin);
-	std::vector<int> formatOrigin(std::vector<int> listeFct);
+	std::vector<int> formatOrigin(std::vector<int> liste);
     void generation_aleatoire1();
 	void generation_aleatoire2();
 	void BronKerbosch(std::vector<int> P, std::vector<int> R, std::vector<int> X);

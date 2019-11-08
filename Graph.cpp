@@ -38,11 +38,47 @@ Graph::Graph(int i, Graph graphe){
 		newListe_voisins.push_back(newListe);
 	}
 
-	liste_voisins = newListe_voisins;
 	nb_sommet = (int) correspondanceOrignFct.size();
+
+	for(int j=0;j<(int) newListe_voisins.size();j++){
+		for(int k=0;k<(int) newListe_voisins[j].size();k++){
+			auto result = find(correspondanceOrignFct.begin(),correspondanceOrignFct.end(), newListe_voisins[j][k]);
+			newListe_voisins[j][k] = distance(correspondanceOrignFct.begin(), result);
+		}
+	}
+
+	liste_voisins = newListe_voisins;
+
+	cout << "Liste correspondance: ";
+	for(auto sommet : correspondanceOrignFct){
+
+		cout << sommet << ", ";
+	}
+	cout << endl;
+
+	std::vector<int> test;
+	for(auto voisins : liste_voisins){
+		test=formatOrigin(voisins);
+		cout << "Liste de base: ";
+		for(auto sommet : test){
+
+			cout << sommet << ", ";
+		}
+		cout << endl;
+	}
+
 }
 
 Graph::~Graph() {}
+
+vector<int> Graph::formatOrigin(vector<int> liste){
+	vector<int> newListe;
+
+	for(int k=0;k<(int) liste.size();k++){
+		newListe.push_back(correspondanceOrignFct[k]);
+	}
+	return newListe;
+}
 
 void Graph::generation_aleatoire1(){
 	double p = frand_0_1(); //p flottant aléatoire entre 0 et 1
