@@ -6,6 +6,17 @@
 #include <ctime>
 #include <vector>
 
+struct VectorHash { //pour hasher des vector<int>
+    size_t operator()(const std::vector<int>& v) const {
+        std::hash<int> hasher;
+        size_t seed = 0;
+        for (int i : v) {
+            seed ^= hasher(i) + 0x9e3779b9 + (seed<<6) + (seed>>2);
+        }
+        return seed;
+    }
+};
+
 /* graphe représenté par un vecteur de vecteurs,
  * T[i] contiendra les voisins de i avec un n° sommet supérieur
  * pour éviter la redondance
@@ -16,7 +27,7 @@ private:
 	std::vector<int> list_degen;
 	int k_degen;
 	std::vector<std::vector<int>> liste_adj_d;
-	std::vector<int> correspondanceOrignFct();
+	std::vector<int> correspondanceOrignFct;
 public:
 	std::vector<std::vector<int>> clique_maximal;
 	int nb_sommet;

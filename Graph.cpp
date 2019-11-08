@@ -4,6 +4,7 @@
 #include "Graph.hpp"
 
 using namespace std;
+using MySet = std::unordered_set<std::vector<int>, VectorHash>;
 
 Graph::Graph(int n)  {
 	nb_sommet = n;
@@ -12,6 +13,7 @@ Graph::Graph(int n)  {
 
 Graph::Graph(int i, Graph graphe){
 	int maxSommet(i);
+	k_degen = 0;
 	liste_voisins.push_back(graphe.liste_voisins[i]);
 	correspondanceOrignFct.push_back(i);
 
@@ -459,10 +461,10 @@ void Graph::maximal_clique_enumeration1(){
 		}
 		cout << "]" << endl;
 	}
-	unordered_set<vector<int>> T;
+	MySet T;
 	for(int j=0;j<nb_sommet;j++){
 		//clique maximale de G(j)
-		Graph sous_graphe = Graph(j,this);
+		Graph sous_graphe(j);
 		sous_graphe.bron_kerbosch_degeneracy();
 		for(auto K : sous_graphe.clique_maximal){
 
@@ -483,12 +485,10 @@ void Graph::maximal_clique_enumeration1(){
 			auto recherche = T.find(k_ordonne);
 			if (recherche == T.end()){ //pas de match
 				T.insert(k_ordonne); //insérer K dans T
-				cout << "liste adjacence degen : " << endl;
-				for(auto voisins : K){
+				cout << "k_ordonne : " << endl;
+				for(auto sommet : k_ordonne){
 					cout << "[ ";
-					for(auto sommet : voisins){
-						cout << sommet << ", ";
-					}
+					cout << sommet << ", ";
 					cout << "]" << endl;
 				}
 			}
