@@ -1,4 +1,4 @@
-COMPONENTS = Graph.cpp
+COMPONENTS = Graph.cpp Noeud.cpp Arbre.cpp
 
 all: a.out clean
 
