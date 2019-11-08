@@ -17,22 +17,6 @@ int main(){
 		P.push_back(i);
 	}
 	graphe.affiche();
-<<<<<<< HEAD
-	graphe.BronKerbosch(P, R, X);
-
-	cout << "List clique maximale : " << endl;
-	for(auto clique : graphe.clique_maximal){
-		cout << "[ ";
-		for(auto sommet : clique){
-			cout << sommet << ", ";
-		}
-		cout << "]" << endl;
-	}
-	graphe.clique_maximal.clear();
-	graphe.degeneracy();
-	graphe.liste_adj_degen();
-	graphe.bron_kerbosch_degeneracy();
-=======
 
 	cout << "Graphe2: avec sommet 3:" << endl;
 	Graph graphe2(3,graphe);
@@ -41,7 +25,6 @@ int main(){
 	//graphe.degeneracy();
 	//graphe.liste_adj_degen();
 	//graphe.bron_kerbosch_degeneracy();
->>>>>>> OnCommenceLesBetises
 
 	return 0;
 }
