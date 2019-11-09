@@ -30,6 +30,8 @@ void Graph::generation_aleatoire1(){
 		liste_voisins.push_back(voisins); //on ajoute la liste de voisins du sommet
 		voisins.clear();
 	}
+
+	
 }
 
 
