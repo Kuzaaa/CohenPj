@@ -1,11 +1,17 @@
 #include <iostream>
 
 #include "Graph.hpp"
+#include "Arbre.hpp"
+#include "Noeud.hpp"
 
 using namespace std;
 
 int main(){
-	vector<int> P;
+
+	Noeud root;
+	Arbre arbre(root);
+
+	/*vector<int> P;
 	vector<int> R;
 	vector<int> X;
 
@@ -20,7 +26,7 @@ int main(){
 
 	cout << "Graphe2: avec sommet 3:" << endl;
 	Graph graphe2(3,graphe);
-	graphe2.affiche();
+	graphe2.affiche();*/
 
 	//graphe.degeneracy();
 	//graphe.liste_adj_degen();

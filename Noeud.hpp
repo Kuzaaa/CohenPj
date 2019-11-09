@@ -7,10 +7,11 @@
 class Noeud {
 private:
     int valeur;
-    std::vector<Noeud> noeud;
+    std::vector<Noeud> noeuds;
 public:
     Noeud();
     Noeud(int n);
+
     ~Noeud();
 protected:
 

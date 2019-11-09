@@ -1,4 +1,5 @@
 #include "Noeud.hpp"
+using namespace std;
 
 Noeud::Noeud()  {}
 

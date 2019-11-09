@@ -1,7 +1,16 @@
 #include "Arbre.hpp"
-#include "Noeud.hpp"
+#include <iostream>
+using namespace std;
 
-Arbre::Arbre(Noeud root){
-    root = root;
+Arbre::Arbre(Noeud n){
+    root = n;
 }
+
 Arbre::~Arbre() {}
+
+void Arbre::printAll(){
+    print(root);
+}
+
+void Arbre::print(Noeud n){
+}

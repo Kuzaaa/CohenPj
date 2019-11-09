@@ -10,6 +10,9 @@ private:
 public:
     Arbre(Noeud root);
     ~Arbre();
+    void printAll();
+    void print(Noeud n);
+    void ajout_noeud(Noeud noeud);
 protected:
 
 };
