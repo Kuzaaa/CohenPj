@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <unordered_set>
 #include "Graph.hpp"
+#include "suffix_hash_map.hpp"
 
 using namespace std;
 using MySet = std::unordered_set<std::vector<int>, VectorHash>;
@@ -53,22 +54,22 @@ Graph::Graph(Graph graphe,int i){
 
 	liste_voisins = newListe_voisins;
 
-	cout << "Liste correspondance: ";
+	/*cout << "Liste correspondance: ";
 	for(auto sommet : correspondanceOrignFct){
 
 		cout << sommet << ", ";
 	}
-	cout << endl;
+	cout << endl;*/
 
 	std::vector<int> test;
 	for(auto voisins : liste_voisins){
 		test=formatOrigin(voisins);
-		cout << "Liste de base: ";
+		/*cout << "Liste de base: ";
 		for(auto sommet : test){
 
 			cout << sommet << ", ";
 		}
-		cout << endl;
+		cout << endl;*/
 	}
 
 }
@@ -82,6 +83,7 @@ vector<int> Graph::formatOrigin(vector<int> liste){
 		newListe.push_back(correspondanceOrignFct[liste[k]]);
 	}
 
+	correspondanceOrignFct.clear();
 	return newListe;
 }
 
@@ -504,14 +506,29 @@ void Graph::maximal_clique_enumeration1(){
 		//clique maximale de G(j)
 		Graph sous_graphe(*this,j);
 		cout << "sous graphe de " << j << endl;
-		sous_graphe.affiche();
-		sous_graphe.bron_kerbosch_degeneracy();
+		//sous_graphe.affiche();
+		vector<int> P;
+		vector<int> R;
+		vector<int> X;
+		for(int i=0; i<sous_graphe.nb_sommet; i++){
+			P.push_back(i);
+		}
+		sous_graphe.BronKerbosch(P,R,X);
+		if(sous_graphe.clique_maximal.empty()){
+			cout << "pas de clique max" << endl;
+		}
 		for(auto K : sous_graphe.clique_maximal){
-
+			vector<int> K_ok = sous_graphe.formatOrigin(K);
+			/*cout << "K_ok : " << endl;
+			cout << "[ ";
+			for(auto sommet : K_ok){
+				cout << sommet << ", ";
+			}
+			cout << "]" << endl;*/
 			//ordonner les sommets
 			int occ[nb_sommet]={0};
 			vector<int> k_ordonne;
-			for(auto i : K){
+			for(auto i : K_ok){
 				occ[i]=1;
 			}
 			for(auto i : this->list_degen){
@@ -522,15 +539,20 @@ void Graph::maximal_clique_enumeration1(){
 			}
 
 			//chercher K dans T
+
 			auto recherche = T.find(k_ordonne);
 			if (recherche == T.end()){ //pas de match
-				T.insert(k_ordonne); //insérer K dans T
-				cout << "k_ordonne : " << endl;
-				for(auto sommet : k_ordonne){
-					cout << "[ ";
-					cout << sommet << ", ";
-					cout << "]" << endl;
+				//insérer K dans T
+				vector<vector<int>> k_suffixe = get_suffixe(k_ordonne);
+				for(auto suffixe : k_suffixe){
+					T.insert(suffixe);
 				}
+				cout << "k_ordonne : " << endl;
+				cout << "[ ";
+				for(auto sommet : k_ordonne){
+					cout << sommet << ", ";
+				}
+				cout << "]" << endl;
 			}
 		}
 	}

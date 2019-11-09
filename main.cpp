@@ -1,15 +1,17 @@
 #include <iostream>
 
 #include "Graph.hpp"
+#include "suffix_hash_map.hpp"
 
 using namespace std;
 
 int main(){
+
 	vector<int> P;
 	vector<int> R;
 	vector<int> X;
 
-	Graph graphe(6);
+	Graph graphe(10);
 	srand(time(NULL));
 	graphe.generation_aleatoire2();
 	graphe.maximal_clique_enumeration1();
