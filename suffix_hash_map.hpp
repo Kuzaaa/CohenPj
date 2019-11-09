@@ -6,6 +6,6 @@
 #include <cstdlib>
 #include <vector>
 
-std::vector<std::vector<int>> get_suffixe (std::vector<int> clique);
+void get_suffixe (std::vector<int>* clique,std::vector<std::vector<int>>* suffixes);
 
 #endif /* SUFFIX_HASH_MAP_HPP_ */

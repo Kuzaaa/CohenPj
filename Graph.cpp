@@ -12,19 +12,19 @@ Graph::Graph(int n)  {
 	k_degen = 0;
 }
 
-Graph::Graph(Graph graphe,int i){
+Graph::Graph(Graph* graphe,int i){
 	k_degen = 0;
-	liste_voisins.push_back(graphe.liste_voisins[i]);
+	liste_voisins.push_back(graphe->liste_voisins[i]);
 	correspondanceOrignFct.push_back(i);
 
 	//On stock tous les voisins inferieurs dans une liste.
 	//Avec leur indice, on peut retrouver leur valeur.
 	//De plus, on initialise les listes_voisins
-	for(auto voisin : graphe.liste_voisins[i]){
-		auto placeI = find(graphe.list_degen.begin(),graphe.list_degen.end(), i);
-		auto result = find(placeI, graphe.list_degen.end(), voisin);
-		if(result != graphe.list_degen.end()){
-			liste_voisins.push_back(graphe.liste_voisins[voisin]);
+	for(auto voisin : graphe->liste_voisins[i]){
+		auto placeI = find(graphe->list_degen.begin(),graphe->list_degen.end(), i);
+		auto result = find(placeI, graphe->list_degen.end(), voisin);
+		if(result != graphe->list_degen.end()){
+			liste_voisins.push_back(graphe->liste_voisins[voisin]);
 			correspondanceOrignFct.push_back(voisin);
 		}
 	}
@@ -58,15 +58,13 @@ Graph::Graph(Graph graphe,int i){
 
 Graph::~Graph() {}
 
-vector<int> Graph::formatOrigin(vector<int> liste){
-	vector<int> newListe;
+void Graph::formatOrigin(vector<int>* liste,vector<int>* newListe){
 
-	for(int k=0;k<(int) liste.size();k++){
-		newListe.push_back(correspondanceOrignFct[liste[k]]);
+	for(int k=0;k<(int) liste->size();k++){
+		newListe->push_back(correspondanceOrignFct[(*liste)[k]]);
 	}
 
 	correspondanceOrignFct.clear();
-	return newListe;
 }
 
 void Graph::generation_aleatoire1(){
@@ -77,7 +75,7 @@ void Graph::generation_aleatoire1(){
 
 	cout << "p=" << p << endl;
 
-	for(sommet=0;sommet<nb_sommet;sommet++){
+	for(sommet=0;sommet<nb_sommet;sommet++){//initialisation des listes vides pour liste_voisins
 		vector<int> liste;
 		liste_voisins.push_back(liste);
 	}
@@ -156,24 +154,24 @@ void Graph::generation_aleatoire2(){
 	}
 }
 
-void Graph::BronKerbosch(std::vector<int> P, std::vector<int> R, std::vector<int> X){
+void Graph::BronKerbosch(std::vector<int>* P, std::vector<int>* R, std::vector<int>* X){
 
 	//Condition d'arrêt
-	if (P.empty() && X.empty()){
-		clique_maximal.push_back(R);
+	if (P->empty() && X->empty()){
+		clique_maximal.push_back(*R);
 	}
 
 	//Pour tous les sommets de P
-	while (!P.empty()){
-		int sommet = P[0];
+	while (!P->empty()){
+		int sommet = (*P)[0];
 		std::vector<int> newP, newR, newX;
 
 		//R⋃sommet
-		newR = R;
+		newR = *R;
 		newR.push_back(sommet);
 
 		//P⋂⌈(sommet)
-		for(auto i : P){
+		for(auto i : *P){
 			auto result = find(liste_voisins[sommet].begin(), liste_voisins[sommet].end(), i);
 		    if (result != liste_voisins[sommet].end()) {
 				newP.push_back(i);
@@ -181,7 +179,7 @@ void Graph::BronKerbosch(std::vector<int> P, std::vector<int> R, std::vector<int
 		}
 
 		//X⋂⌈(sommet)
-		for(auto i : X){
+		for(auto i : *X){
 			auto result = find(liste_voisins[sommet].begin(),liste_voisins[sommet].end(),i);
 			if (result != liste_voisins[sommet].end()){
 				newX.push_back(i);
@@ -189,13 +187,13 @@ void Graph::BronKerbosch(std::vector<int> P, std::vector<int> R, std::vector<int
 		}
 
 		//Appel de récurrence
-		BronKerbosch(newP,newR,newX);
+		BronKerbosch(&newP,&newR,&newX);
 
 		//P\sommet
-		P.erase(remove(P.begin(), P.end(), sommet), P.end());
+		P->erase(remove(P->begin(), P->end(), sommet), P->end());
 
 		//X⋃sommet
-		X.push_back(sommet);
+		X->push_back(sommet);
 	}
 }
 
@@ -472,42 +470,35 @@ void Graph::bron_kerbosch_pivot(std::vector<int> P, std::vector<int> R, std::vec
 
 
 void Graph::maximal_clique_enumeration1(){
+	//dégénérescence + ordre de dégénérescence de G
 	degeneracy();
-	cout << "k=" << k_degen << endl;
+
+	//liste d'adjacence dégénérée
 	liste_adj_degen();
-	cout << "liste adjacence degen : " << endl;
-	for(auto voisins : liste_adj_d){
-		cout << "[ ";
-		for(auto sommet : voisins){
-			cout << sommet << ", ";
-		}
-		cout << "]" << endl;
-	}
+
+	//arbre de suffixe représenté par un unordered_set<vector<int>> avec la clé = les suffixes des cliques
 	MySet T;
 	for(int j=0;j<nb_sommet;j++){
-		//clique maximale de G(j)
-		Graph sous_graphe(*this,list_degen[j]);
-		cout << "sous graphe de " << list_degen[j] << endl;
-		//sous_graphe.affiche();
+
+		//création sous graphe Gj selon l'ordre de dégénérescence
+		Graph sous_graphe(this,list_degen[j]);
+
+		//cliques maximales de Gj
 		vector<int> P;
 		vector<int> R;
 		vector<int> X;
 		for(int i=0; i<sous_graphe.nb_sommet; i++){
 			P.push_back(i);
 		}
-		sous_graphe.BronKerbosch(P,R,X);
-		if(sous_graphe.clique_maximal.empty()){
-			cout << "pas de clique max" << endl;
-		}
+		sous_graphe.BronKerbosch(&P,&R,&X);
+
 		for(auto K : sous_graphe.clique_maximal){
-			vector<int> K_ok = sous_graphe.formatOrigin(K);
-			/*cout << "K_ok : " << endl;
-			cout << "[ ";
-			for(auto sommet : K_ok){
-				cout << sommet << ", ";
-			}
-			cout << "]" << endl;*/
-			//ordonner les sommets
+
+			//transformation avec les bons numéros de sommet
+			vector<int> K_ok;
+			sous_graphe.formatOrigin(&K,&K_ok);
+
+			//ordonner les sommets selon l'ordre de dégénérescence
 			int occ[nb_sommet]={0};
 			vector<int> k_ordonne;
 			for(auto i : K_ok){
@@ -521,15 +512,18 @@ void Graph::maximal_clique_enumeration1(){
 			}
 
 			//chercher K dans T
-
 			auto recherche = T.find(k_ordonne);
 			if (recherche == T.end()){ //pas de match
+
 				//insérer K dans T
-				vector<vector<int>> k_suffixe = get_suffixe(k_ordonne);
+				vector<vector<int>> k_suffixe;
+				get_suffixe(&k_ordonne,&k_suffixe);
 				for(auto suffixe : k_suffixe){
 					T.insert(suffixe);
 				}
-				cout << "k_ordonne : " << endl;
+
+				//on print les cliques max
+				cout << "K : " << endl;
 				cout << "[ ";
 				for(auto sommet : k_ordonne){
 					cout << sommet << ", ";
@@ -541,36 +535,35 @@ void Graph::maximal_clique_enumeration1(){
 }
 
 void Graph::maximal_clique_enumeration2(){
+	//dégénérescence + ordre de dégénérescence de G
 	degeneracy();
-	cout << "k=" << k_degen << endl;
+
+	//liste d'adjacence dégénérée
 	liste_adj_degen();
-	cout << "liste adjacence degen : " << endl;
-	for(auto voisins : liste_adj_d){
-		cout << "[ ";
-		for(auto sommet : voisins){
-			cout << sommet << ", ";
-		}
-		cout << "]" << endl;
-	}
+
 	for(auto j=0;j<nb_sommet;j++){
-		//clique maximale de G(j)
-		Graph sous_graphe(*this,list_degen[j]);
-		cout << "sous graphe de " << list_degen[j] << endl;
-		//sous_graphe.affiche();
+
+		//création sous graphe Gj selon l'ordre de dégénérescence
+		Graph sous_graphe(this,list_degen[j]);
+
+		//clique maximales de Gj
 		vector<int> P;
 		vector<int> R;
 		vector<int> X;
 		for(int i=0; i<sous_graphe.nb_sommet; i++){
 			P.push_back(i);
 		}
-		sous_graphe.BronKerbosch(P,R,X);
-		if(sous_graphe.clique_maximal.empty()){
-			cout << "pas de clique max" << endl;
-		}
+		sous_graphe.BronKerbosch(&P,&R,&X);
+
 		for(auto K : sous_graphe.clique_maximal){
-			vector<int> K_ok = sous_graphe.formatOrigin(K);
+
+			//transformation avec les bons numéros de sommet
+			vector<int> K_ok;
+			sous_graphe.formatOrigin(&K,&K_ok);
+
 			for(auto x : K_ok){
-				//voisins de x avec rang degen inférieur
+
+				//voisins de x avec rang dégénérescence inférieur
 				vector<int> voisins_lower_degen_x;
 				int cpt_liste_voisins = liste_adj_d[x].size()-1;
 				int cpt_degen = 0;
@@ -582,24 +575,25 @@ void Graph::maximal_clique_enumeration2(){
 					cpt_degen++;
 				}
 
+				//on cherche si un voisin de x dans G avec un rang de dégénérescence inférieur est voisin de tous les sommets de K
 				bool reject_k = false;
 				for(auto voisin_x : voisins_lower_degen_x){
 					bool adjacent = true;
 					for(auto sommet_k : K_ok){
 						if(sommet_k != x && adjacent){
 							auto result = find(liste_voisins[sommet_k].begin(),liste_voisins[sommet_k].end(),voisin_x);
-							if (result == liste_voisins[sommet_k].end()){
+							if (result == liste_voisins[sommet_k].end()){//voisin_x n'est pas voisin de sommet_k
 								adjacent = false;
 							}
 						}
 					}
-					if(adjacent) {
+					if(adjacent) {//on a trouvé un voisin_x adjacent à tous les sommets de K
 						reject_k = true;
 						break;
 					}
 				}
-				if(!reject_k){
-					cout << "K_ok : " << endl;
+				if(!reject_k){//on a pas trouvé de voisin de x adjacent à tous les sommets de K
+					cout << "K : " << endl;
 					cout << "[ ";
 					for(auto sommet : K_ok){
 						cout << sommet << ", ";
