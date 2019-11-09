@@ -13,7 +13,6 @@ Graph::Graph(int n)  {
 }
 
 Graph::Graph(Graph graphe,int i){
-	int maxSommet(i);
 	k_degen = 0;
 	liste_voisins.push_back(graphe.liste_voisins[i]);
 	correspondanceOrignFct.push_back(i);
@@ -22,10 +21,9 @@ Graph::Graph(Graph graphe,int i){
 	//Avec leur indice, on peut retrouver leur valeur.
 	//De plus, on initialise les listes_voisins
 	for(auto voisin : graphe.liste_voisins[i]){
-		if(i<voisin){
-			if(voisin>maxSommet){
-				maxSommet=voisin;
-			}
+		auto placeI = find(graphe.list_degen.begin(),graphe.list_degen.end(), i);
+		auto result = find(placeI, graphe.list_degen.end(), voisin);
+		if(result != graphe.list_degen.end()){
 			liste_voisins.push_back(graphe.liste_voisins[voisin]);
 			correspondanceOrignFct.push_back(voisin);
 		}
@@ -43,6 +41,8 @@ Graph::Graph(Graph graphe,int i){
 		newListe_voisins.push_back(newListe);
 	}
 
+
+
 	nb_sommet = (int) correspondanceOrignFct.size();
 
 	for(int j=0;j<(int) newListe_voisins.size();j++){
@@ -53,24 +53,6 @@ Graph::Graph(Graph graphe,int i){
 	}
 
 	liste_voisins = newListe_voisins;
-
-	/*cout << "Liste correspondance: ";
-	for(auto sommet : correspondanceOrignFct){
-
-		cout << sommet << ", ";
-	}
-	cout << endl;*/
-
-	std::vector<int> test;
-	for(auto voisins : liste_voisins){
-		test=formatOrigin(voisins);
-		/*cout << "Liste de base: ";
-		for(auto sommet : test){
-
-			cout << sommet << ", ";
-		}
-		cout << endl;*/
-	}
 
 }
 

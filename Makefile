@@ -1,4 +1,4 @@
-COMPONENTS = Graph.cpp Noeud.cpp Arbre.cpp
+COMPONENTS = Graph.cpp suffix_hash_map.cpp
 
 all: a.out clean
 
