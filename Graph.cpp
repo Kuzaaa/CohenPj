@@ -572,10 +572,10 @@ void Graph::maximal_clique_enumeration2(){
 			for(auto x : K_ok){
 				//voisins de x avec rang degen inférieur
 				vector<int> voisins_lower_degen_x;
-				int cpt_liste_voisins = liste_voisins[x].size()-1;
+				int cpt_liste_voisins = liste_adj_d[x].size()-1;
 				int cpt_degen = 0;
 				while(cpt_degen < j && cpt_liste_voisins >=0){
-					if(liste_voisins[x][cpt_liste_voisins]==list_degen[cpt_degen]){
+					if(liste_adj_d[x][cpt_liste_voisins]==list_degen[cpt_degen]){
 						voisins_lower_degen_x.push_back(list_degen[cpt_degen]);
 						cpt_liste_voisins--;
 					}
@@ -585,13 +585,11 @@ void Graph::maximal_clique_enumeration2(){
 				bool reject_k = false;
 				for(auto voisin_x : voisins_lower_degen_x){
 					bool adjacent = true;
-					if(adjacent){
-						for(auto sommet_k : K_ok){
-							if(sommet_k != x && adjacent){
-								auto result = find(liste_voisins[sommet_k].begin(),liste_voisins[sommet_k].end(),voisin_x);
-								if (result == liste_voisins[sommet_k].end()){
-									adjacent = false;
-								}
+					for(auto sommet_k : K_ok){
+						if(sommet_k != x && adjacent){
+							auto result = find(liste_voisins[sommet_k].begin(),liste_voisins[sommet_k].end(),voisin_x);
+							if (result == liste_voisins[sommet_k].end()){
+								adjacent = false;
 							}
 						}
 					}

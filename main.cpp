@@ -12,7 +12,7 @@ int main(){
 	vector<int> R;
 	vector<int> X;
 
-	Graph graphe(6);
+	Graph graphe(8);
 	srand(time(NULL));
 	graphe.generation_aleatoire2();
 	//graphe.maximal_clique_enumeration1();
