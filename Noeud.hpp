@@ -3,25 +3,16 @@
 
 #include <stdio.h>
 #include <vector>
-#include <unordered_set>
+#include <unordered_map>
 
+class Noeud;
 class Noeud {
 private:
     int valeur;
-    std::unordered_set<Noeud> noeuds;
+    std::unordered_map<int,Noeud> fils;
 public:
     Noeud();
     Noeud(int n);
-    bool operator ==(const Noeud & obj) const{
-        if (valeur == obj.valeur)
-            return true;
-        else
-            return false;
-    }
-    int getValeur() const
-    {
-        return valeur;
-    }
     ~Noeud();
 protected:
 
