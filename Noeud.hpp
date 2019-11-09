@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <vector>
+#include <unordered_set>
 
 class Noeud {
 private:
@@ -11,7 +12,16 @@ private:
 public:
     Noeud();
     Noeud(int n);
-
+    bool operator ==(const Noeud & obj) const{
+        if (valeur == obj.valeur)
+            return true;
+        else
+            return false;
+    }
+    int getValeur() const
+    {
+        return valeur;
+    }
     ~Noeud();
 protected:
 

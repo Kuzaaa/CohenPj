@@ -10,9 +10,9 @@ private:
 public:
     Arbre(Noeud root);
     ~Arbre();
-    void printAll();
-    void print(Noeud n);
-    void ajout_noeud(Noeud noeud);
+    void printAll();//appel initial de print avec root en param
+    void print(Noeud n);//permet de visualiser un noeud, appel récursifs sur ses fils
+    void ajout_noeud(Noeud noeud);//on pleure
 protected:
 
 };
