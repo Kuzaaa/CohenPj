@@ -1,25 +1,23 @@
 #include <iostream>
 
 #include "Graph.hpp"
-#include "Arbre.hpp"
-#include "Noeud.hpp"
+#include "suffix_hash_map.hpp"
 
 using namespace std;
 
 int main(){
 
-	Noeud root;
-	Arbre arbre(root);
 
-	/*vector<int> P;
+	vector<int> P;
 	vector<int> R;
 	vector<int> X;
 
-	Graph graphe(6);
+	Graph graphe(10);
 	srand(time(NULL));
-	graphe.generation_aleatoire1();
+	graphe.generation_aleatoire2();
+	graphe.maximal_clique_enumeration1();
 
-	for(int i=0; i<graphe.nb_sommet; i++){
+	/*for(int i=0; i<graphe.nb_sommet; i++){
 		P.push_back(i);
 	}
 	graphe.affiche();

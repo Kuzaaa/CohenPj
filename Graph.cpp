@@ -1,16 +1,20 @@
 #include <iterator>
 #include <algorithm>
+#include <unordered_set>
 #include "Graph.hpp"
+#include "suffix_hash_map.hpp"
 
 using namespace std;
+using MySet = std::unordered_set<std::vector<int>, VectorHash>;
 
 Graph::Graph(int n)  {
 	nb_sommet = n;
 	k_degen = 0;
 }
 
-Graph::Graph(int i, Graph graphe){
+Graph::Graph(Graph graphe,int i){
 	int maxSommet(i);
+	k_degen = 0;
 	liste_voisins.push_back(graphe.liste_voisins[i]);
 	correspondanceOrignFct.push_back(i);
 
@@ -50,22 +54,22 @@ Graph::Graph(int i, Graph graphe){
 
 	liste_voisins = newListe_voisins;
 
-	cout << "Liste correspondance: ";
+	/*cout << "Liste correspondance: ";
 	for(auto sommet : correspondanceOrignFct){
 
 		cout << sommet << ", ";
 	}
-	cout << endl;
+	cout << endl;*/
 
 	std::vector<int> test;
 	for(auto voisins : liste_voisins){
 		test=formatOrigin(voisins);
-		cout << "Liste de base: ";
+		/*cout << "Liste de base: ";
 		for(auto sommet : test){
 
 			cout << sommet << ", ";
 		}
-		cout << endl;
+		cout << endl;*/
 	}
 
 }
@@ -79,6 +83,7 @@ vector<int> Graph::formatOrigin(vector<int> liste){
 		newListe.push_back(correspondanceOrignFct[liste[k]]);
 	}
 
+	correspondanceOrignFct.clear();
 	return newListe;
 }
 
@@ -315,6 +320,7 @@ void Graph::degeneracy(){
 	cout << endl;
 }
 
+
 void Graph::bron_kerbosch_degeneracy(){
 
 	int j;
@@ -478,6 +484,76 @@ void Graph::bron_kerbosch_pivot(std::vector<int> P, std::vector<int> R, std::vec
 				}
 			}
 			X.push_back(v);*/
+		}
+	}
+}
+
+
+void Graph::maximal_clique_enumeration1(){
+	degeneracy();
+	cout << "k=" << k_degen << endl;
+	liste_adj_degen();
+	cout << "liste adjacence degen : " << endl;
+	for(auto voisins : liste_adj_d){
+		cout << "[ ";
+		for(auto sommet : voisins){
+			cout << sommet << ", ";
+		}
+		cout << "]" << endl;
+	}
+	MySet T;
+	for(int j=0;j<nb_sommet;j++){
+		//clique maximale de G(j)
+		Graph sous_graphe(*this,j);
+		cout << "sous graphe de " << j << endl;
+		//sous_graphe.affiche();
+		vector<int> P;
+		vector<int> R;
+		vector<int> X;
+		for(int i=0; i<sous_graphe.nb_sommet; i++){
+			P.push_back(i);
+		}
+		sous_graphe.BronKerbosch(P,R,X);
+		if(sous_graphe.clique_maximal.empty()){
+			cout << "pas de clique max" << endl;
+		}
+		for(auto K : sous_graphe.clique_maximal){
+			vector<int> K_ok = sous_graphe.formatOrigin(K);
+			/*cout << "K_ok : " << endl;
+			cout << "[ ";
+			for(auto sommet : K_ok){
+				cout << sommet << ", ";
+			}
+			cout << "]" << endl;*/
+			//ordonner les sommets
+			int occ[nb_sommet]={0};
+			vector<int> k_ordonne;
+			for(auto i : K_ok){
+				occ[i]=1;
+			}
+			for(auto i : this->list_degen){
+				if(occ[i]!=0){
+					k_ordonne.push_back(i);
+					occ[i]=0;
+				}
+			}
+
+			//chercher K dans T
+
+			auto recherche = T.find(k_ordonne);
+			if (recherche == T.end()){ //pas de match
+				//insérer K dans T
+				vector<vector<int>> k_suffixe = get_suffixe(k_ordonne);
+				for(auto suffixe : k_suffixe){
+					T.insert(suffixe);
+				}
+				cout << "k_ordonne : " << endl;
+				cout << "[ ";
+				for(auto sommet : k_ordonne){
+					cout << sommet << ", ";
+				}
+				cout << "]" << endl;
+			}
 		}
 	}
 }
