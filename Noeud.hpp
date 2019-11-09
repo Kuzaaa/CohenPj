@@ -7,7 +7,7 @@
 class Noeud {
 private:
     int valeur;
-    std::vector<Noeud> noeuds;
+    std::unordered_set<Noeud> noeuds;
 public:
     Noeud();
     Noeud(int n);
