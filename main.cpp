@@ -7,6 +7,7 @@ using namespace std;
 
 int main(){
 
+
 	vector<int> P;
 	vector<int> R;
 	vector<int> X;
