@@ -7,6 +7,7 @@ void get_suffixe (vector<int>* clique,vector<vector<int>>* suffixes){
 
 	for(auto i=0;i<(int)clique->size();i++){
 		for(auto j=i;j<(int)clique->size();j++){
+			//on ajoute le sommet d'après au dernier suffixe pour créer le nouveau suffixe
 			suffixe_act.push_back((*clique)[j]);
 			suffixes->push_back(suffixe_act);
 		}
