@@ -12,10 +12,11 @@ int main(){
 	vector<int> R;
 	vector<int> X;
 
-	Graph graphe(10);
+	Graph graphe(6);
 	srand(time(NULL));
 	graphe.generation_aleatoire2();
-	graphe.maximal_clique_enumeration1();
+	//graphe.maximal_clique_enumeration1();
+	graphe.maximal_clique_enumeration2();
 
 	/*for(int i=0; i<graphe.nb_sommet; i++){
 		P.push_back(i);

@@ -486,8 +486,8 @@ void Graph::maximal_clique_enumeration1(){
 	MySet T;
 	for(int j=0;j<nb_sommet;j++){
 		//clique maximale de G(j)
-		Graph sous_graphe(*this,j);
-		cout << "sous graphe de " << j << endl;
+		Graph sous_graphe(*this,list_degen[j]);
+		cout << "sous graphe de " << list_degen[j] << endl;
 		//sous_graphe.affiche();
 		vector<int> P;
 		vector<int> R;
@@ -554,8 +554,8 @@ void Graph::maximal_clique_enumeration2(){
 	}
 	for(auto j=0;j<nb_sommet;j++){
 		//clique maximale de G(j)
-		Graph sous_graphe(*this,j);
-		cout << "sous graphe de " << j << endl;
+		Graph sous_graphe(*this,list_degen[j]);
+		cout << "sous graphe de " << list_degen[j] << endl;
 		//sous_graphe.affiche();
 		vector<int> P;
 		vector<int> R;
@@ -607,8 +607,8 @@ void Graph::maximal_clique_enumeration2(){
 						cout << sommet << ", ";
 					}
 					cout << "]" << endl;
+					break;
 				}
-
 			}
 		}
 	}
