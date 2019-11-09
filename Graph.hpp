@@ -46,6 +46,7 @@ public:
     void bron_kerbosch_pivot(std::vector<int> P, std::vector<int> R, std::vector<int> X);
     void liste_adj_degen();
     void maximal_clique_enumeration1();
+    void maximal_clique_enumeration2();
 protected:
 
 };

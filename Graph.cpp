@@ -558,6 +558,80 @@ void Graph::maximal_clique_enumeration1(){
 	}
 }
 
+void Graph::maximal_clique_enumeration2(){
+	degeneracy();
+	cout << "k=" << k_degen << endl;
+	liste_adj_degen();
+	cout << "liste adjacence degen : " << endl;
+	for(auto voisins : liste_adj_d){
+		cout << "[ ";
+		for(auto sommet : voisins){
+			cout << sommet << ", ";
+		}
+		cout << "]" << endl;
+	}
+	for(auto j=0;j<nb_sommet;j++){
+		//clique maximale de G(j)
+		Graph sous_graphe(*this,j);
+		cout << "sous graphe de " << j << endl;
+		//sous_graphe.affiche();
+		vector<int> P;
+		vector<int> R;
+		vector<int> X;
+		for(int i=0; i<sous_graphe.nb_sommet; i++){
+			P.push_back(i);
+		}
+		sous_graphe.BronKerbosch(P,R,X);
+		if(sous_graphe.clique_maximal.empty()){
+			cout << "pas de clique max" << endl;
+		}
+		for(auto K : sous_graphe.clique_maximal){
+			vector<int> K_ok = sous_graphe.formatOrigin(K);
+			for(auto x : K_ok){
+				//voisins de x avec rang degen inférieur
+				vector<int> voisins_lower_degen_x;
+				int cpt_liste_voisins = liste_voisins[x].size()-1;
+				int cpt_degen = 0;
+				while(cpt_degen < j && cpt_liste_voisins >=0){
+					if(liste_voisins[x][cpt_liste_voisins]==list_degen[cpt_degen]){
+						voisins_lower_degen_x.push_back(list_degen[cpt_degen]);
+						cpt_liste_voisins--;
+					}
+					cpt_degen++;
+				}
+
+				bool reject_k = false;
+				for(auto voisin_x : voisins_lower_degen_x){
+					bool adjacent = true;
+					if(adjacent){
+						for(auto sommet_k : K_ok){
+							if(sommet_k != x && adjacent){
+								auto result = find(liste_voisins[sommet_k].begin(),liste_voisins[sommet_k].end(),voisin_x);
+								if (result == liste_voisins[sommet_k].end()){
+									adjacent = false;
+								}
+							}
+						}
+					}
+					if(adjacent) {
+						reject_k = true;
+						break;
+					}
+				}
+				if(!reject_k){
+					cout << "K_ok : " << endl;
+					cout << "[ ";
+					for(auto sommet : K_ok){
+						cout << sommet << ", ";
+					}
+					cout << "]" << endl;
+				}
+
+			}
+		}
+	}
+}
+
 double Graph::frand_0_1(){
 	return rand()/(double)RAND_MAX ;
 }
