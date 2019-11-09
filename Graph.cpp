@@ -5,6 +5,7 @@
 #include "suffix_hash_map.hpp"
 
 using namespace std;
+//set personnalisé pour pouvoir hasher des vector<int>
 using MySet = std::unordered_set<std::vector<int>, VectorHash>;
 
 Graph::Graph(int n)  {

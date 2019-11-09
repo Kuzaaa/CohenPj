@@ -18,8 +18,7 @@ struct VectorHash { //pour hasher des vector<int>
 };
 
 /* graphe représenté par un vecteur de vecteurs,
- * T[i] contiendra les voisins de i avec un n° sommet supérieur
- * pour éviter la redondance
+ * T[i] contiendra les voisins du sommet i
  */
 class Graph {
 private:
@@ -28,9 +27,10 @@ private:
 	int k_degen;
 	std::vector<std::vector<int>> liste_adj_d;
 	std::vector<int> correspondanceOrignFct;
-public:
 	std::vector<std::vector<int>> clique_maximal;
 	int nb_sommet;
+public:
+
 
     Graph(int n);
 	Graph(Graph* graphe, int i);//Construit un sous graphe avec i et voisins de i > i
