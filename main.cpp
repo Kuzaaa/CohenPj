@@ -44,7 +44,7 @@ int main(){
 		else
 			graphe.generation_aleatoire2();
 
-		graphe.affiche();
+		//graphe.affiche();
 
 		do{
 			cout << "Que voulez-vous faire ?:\n(1)Bron-Kerbosch\n(2)Bron-Kerbosch avec pivot"
@@ -58,16 +58,17 @@ int main(){
 				for(int i=0; i<nb_sommet; i++){
 					P.push_back(i);
 				}
+				//graphe.degeneracy();
 				start = std::chrono::system_clock::now();
 				graphe.BronKerbosch(P,R,X);
 				sec = std::chrono::system_clock::now() - start;
-				for(auto clique : graphe.getListe_clique()){
+				/*for(auto clique : graphe.getListe_clique()){
 					cout << "[ ";
 					for(auto sommet : clique){
 						cout << sommet << ", ";
 					}
 					cout << "]" << endl;
-				}
+				}*/
 				break;
 			case 2:
 				start = std::chrono::system_clock::now();

@@ -77,7 +77,7 @@ void Graph::formatOrigin(vector<int>* liste,vector<int>* newListe){
 
 void Graph::generation_aleatoire1(){
 	double p = frand_0_1(); //p flottant aléatoire entre 0 et 1
-	int sommet,voisin,m;
+	int sommet,voisin,m(0);
 	double p_apparition;
 	vector<int> voisins;
 
@@ -92,7 +92,7 @@ void Graph::generation_aleatoire1(){
 		for(voisin=sommet+1;voisin<nb_sommet;voisin++){ //pour chaque voisin potentiel
 			p_apparition = frand_0_1();//probabilité d'apparition aléatoire entre 0 et 1
 
-			cout << "sommet:" << sommet <<"voisin:" << voisin << "p=" << p_apparition << endl;
+			//cout << "sommet:" << sommet <<"voisin:" << voisin << "p=" << p_apparition << endl;
 
 			if(p_apparition <= p){
 				m++;
@@ -142,7 +142,7 @@ void Graph::generation_aleatoire2(){
 			for(voisin=0; voisin<sommet; voisin++){
 				p_apparition = (double) deg[voisin]/ (double) nb_tot_degres;
 				p = frand_0_1();
-				cout << "sommet:" << sommet <<" voisin:" << voisin << " p_app=" << p_apparition << " p="<< p << endl;
+				//cout << "sommet:" << sommet <<" voisin:" << voisin << " p_app=" << p_apparition << " p="<< p << endl;
 				if(p<p_apparition){
 					//On ajoute la nouvelle arête dans les listes de voisins des sommets concernés
 					liste_voisins[voisin].push_back(sommet);
@@ -225,14 +225,14 @@ void Graph::liste_adj_degen(){
 
 		liste_adj_d.push_back(voisins_degen);
 	}
-	cout << endl;
+	/*cout << endl;
 	for(auto voisins : liste_adj_d){
 		cout << "[ ";
 		for(auto sommet : voisins){
 			cout << sommet << ", ";
 		}
 		cout << "]" << endl;
-	}
+	}*/
 }
 
 void Graph::degeneracy(){
@@ -307,12 +307,12 @@ void Graph::degeneracy(){
 		}
 	}
 	cout << "k : " << k_degen << endl;
-	cout << "List degeneracy : ";
+	/*cout << "List degeneracy : ";
 	for(auto entier : list_degen){
 
 		cout << entier << ", ";
 	}
-	cout << endl;
+	cout << endl;*/
 }
 
 
