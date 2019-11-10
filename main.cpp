@@ -70,7 +70,19 @@ int main(){
 				}
 				break;
 			case 2:
-				cout << "The cake is a lie" << endl;
+				for(int i=0; i<nb_sommet; i++){
+					P.push_back(i);
+				}
+				start = std::chrono::system_clock::now();
+				graphe.bron_kerbosch_degeneracy();
+				sec = std::chrono::system_clock::now() - start;
+				for(auto clique : graphe.getListe_clique()){
+				cout << "[ ";
+				for(auto sommet : clique){
+					cout << sommet << ", ";
+				}
+				cout << "]" << endl;
+			}
 				break;
 			case 3:
 				start = std::chrono::system_clock::now();
