@@ -27,7 +27,6 @@ int main(){
 	std::chrono::system_clock::time_point start;
 	std::chrono::duration<double> sec;
 
-	while(1){
 		do{
 			cout << "Entrer le nombre de sommets ( >= 1 ): ";
 			entree(nb_sommet);
@@ -88,16 +87,6 @@ int main(){
 		}
 
 		cout << "Temps d'execution: " << sec.count() << "secondes." << endl;
-
-		do{
-			cout << "Voulez-vous recommencer ?:\n(1)Oui\n(2)Quitter" << endl;
-			entree(choix);
-		}while((choix < 1)||(choix>2));
-
-		if(choix==2)
-			return 0;
-
-	}
 
 	return 0;
 }
