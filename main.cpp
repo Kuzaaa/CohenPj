@@ -60,7 +60,7 @@ int main(){
 					P.push_back(i);
 				}
 				start = std::chrono::system_clock::now();
-				graphe.BronKerbosch(&P,&R,&X);
+				graphe.BronKerbosch(P,R,X);
 				sec = std::chrono::system_clock::now() - start;
 				for(auto clique : graphe.getListe_clique()){
 					cout << "[ ";
