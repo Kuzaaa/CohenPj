@@ -77,7 +77,7 @@ void Graph::formatOrigin(vector<int>* liste,vector<int>* newListe){
 
 void Graph::generation_aleatoire1(){
 	double p = frand_0_1(); //p flottant aléatoire entre 0 et 1
-	int sommet,voisin;
+	int sommet,voisin,m;
 	double p_apparition;
 	vector<int> voisins;
 
@@ -95,11 +95,14 @@ void Graph::generation_aleatoire1(){
 			cout << "sommet:" << sommet <<"voisin:" << voisin << "p=" << p_apparition << endl;
 
 			if(p_apparition <= p){
+				m++;
 				liste_voisins[sommet].push_back(voisin); //on ajoute le voisin dans le sommet
 				liste_voisins[voisin].push_back(sommet); //on ajoute le sommet dans le voisin
 			}
 		}
 	}
+
+	cout << "m = " << m << end;
 }
 
 
@@ -156,6 +159,8 @@ void Graph::generation_aleatoire2(){
 				}
 			}
 		}
+
+		cout << "m = " << nb_tot_degres/2 << end;
 	}
 
 	//Sinon il n'y a pas assez de sommet pour le graphe triangle initial
