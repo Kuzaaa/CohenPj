@@ -102,7 +102,7 @@ void Graph::generation_aleatoire1(){
 		}
 	}
 
-	cout << "m = " << m << end;
+	cout << "m = " << m << endl;
 }
 
 
@@ -160,7 +160,7 @@ void Graph::generation_aleatoire2(){
 			}
 		}
 
-		cout << "m = " << nb_tot_degres/2 << end;
+		cout << "m = " << nb_tot_degres/2 << endl;
 	}
 
 	//Sinon il n'y a pas assez de sommet pour le graphe triangle initial
