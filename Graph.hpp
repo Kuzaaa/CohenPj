@@ -33,12 +33,12 @@ public:
 
 
     Graph(int n);
-	Graph(Graph* graphe, int i);//Construit un sous graphe avec i et voisins de i > i
+	Graph(Graph* graphe, int e);//Construit un sous graphe avec i et voisins de i > i
     ~Graph();
 	void formatOrigin(std::vector<int>* liste,std::vector<int>* newListe);
     void generation_aleatoire1();
 	void generation_aleatoire2();
-	void BronKerbosch(std::vector<int>* P, std::vector<int>* R, std::vector<int>* X);
+	void BronKerbosch(std::vector<int> P, std::vector<int> R, std::vector<int> X);
     double frand_0_1();
     void affiche();
     void degeneracy();

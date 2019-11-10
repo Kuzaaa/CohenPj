@@ -39,15 +39,15 @@ Graph::Graph(Graph* graphe,int e){
 	vector<vector<int>> newListe_voisins;
 	for(auto L: liste_voisins){
 		vector<int> newListe;
-		for(auto e : L){
-			auto result = find(correspondanceOrignFct.begin(), correspondanceOrignFct.end(), e);
+		for(auto i : L){
+			auto result = find(correspondanceOrignFct.begin(), correspondanceOrignFct.end(), i);
 		    if (result != correspondanceOrignFct.end()) {
-				newListe.push_back(e);
+				newListe.push_back(i);
 			}
 		}
 		newListe_voisins.push_back(newListe);
 	}
-	liste_voisins = newListe_voisins;
+
 
 	//On initialise nb_sommet
 	nb_sommet = (int) correspondanceOrignFct.size();
@@ -59,6 +59,7 @@ Graph::Graph(Graph* graphe,int e){
 			newListe_voisins[j][k] = distance(correspondanceOrignFct.begin(), result);
 		}
 	}
+	liste_voisins = newListe_voisins;
 }
 
 Graph::~Graph() {}
@@ -163,24 +164,24 @@ void Graph::generation_aleatoire2(){
 	}
 }
 
-void Graph::BronKerbosch(std::vector<int>* P, std::vector<int>* R, std::vector<int>* X){
+void Graph::BronKerbosch(std::vector<int> P, std::vector<int> R, std::vector<int> X){
 
 	//Condition d'arrêt
-	if (P->empty() && X->empty()){
-		clique_maximal.push_back(*R);
+	if (P.empty() && X.empty()){
+		clique_maximal.push_back(R);
 	}
 
 	//Tant qu'il y a des sommets
-	while (!P->empty()){
-		int sommet = (*P)[0];
+	while (!P.empty()){
+		int sommet = P[0];
 		std::vector<int> newP, newR, newX;
 
 		//R⋃sommet
-		newR = *R;
+		newR = R;
 		newR.push_back(sommet);
 
 		//P⋂⌈(sommet)
-		for(auto i : *P){
+		for(auto i : P){
 			auto result = find(liste_voisins[sommet].begin(), liste_voisins[sommet].end(), i);
 		    if (result != liste_voisins[sommet].end()) {
 				newP.push_back(i);
@@ -188,7 +189,7 @@ void Graph::BronKerbosch(std::vector<int>* P, std::vector<int>* R, std::vector<i
 		}
 
 		//X⋂⌈(sommet)
-		for(auto i : *X){
+		for(auto i : X){
 			auto result = find(liste_voisins[sommet].begin(),liste_voisins[sommet].end(),i);
 			if (result != liste_voisins[sommet].end()){
 				newX.push_back(i);
@@ -196,13 +197,13 @@ void Graph::BronKerbosch(std::vector<int>* P, std::vector<int>* R, std::vector<i
 		}
 
 		//Appel de récurrence
-		BronKerbosch(&newP,&newR,&newX);
+		BronKerbosch(newP,newR,newX);
 
 		//P\sommet
-		P->erase(remove(P->begin(), P->end(), sommet), P->end());
+		P.erase(remove(P.begin(), P.end(), sommet), P.end());
 
 		//X⋃sommet
-		X->push_back(sommet);
+		X.push_back(sommet);
 	}
 }
 
@@ -499,7 +500,8 @@ void Graph::maximal_clique_enumeration1(){
 		for(int i=0; i<sous_graphe.nb_sommet; i++){
 			P.push_back(i);
 		}
-		sous_graphe.BronKerbosch(&P,&R,&X);
+
+		sous_graphe.BronKerbosch(P,R,X);
 
 		for(auto K : sous_graphe.clique_maximal){
 
@@ -562,7 +564,7 @@ void Graph::maximal_clique_enumeration2(){
 		for(int i=0; i<sous_graphe.nb_sommet; i++){
 			P.push_back(i);
 		}
-		sous_graphe.BronKerbosch(&P,&R,&X);
+		sous_graphe.BronKerbosch(P,R,X);
 
 		for(auto K : sous_graphe.clique_maximal){
 
