@@ -45,6 +45,8 @@ int main(){
 		else
 			graphe.generation_aleatoire2();
 
+		graphe.affiche();
+
 		do{
 			cout << "Que voulez-vous faire ?:\n(1)Bron-Kerbosch\n(2)Bron-Kerbosch avec pivot"
 				"\n(3)Enumeration de cliques maximales avec arbre de suffixe"
@@ -60,6 +62,13 @@ int main(){
 				start = std::chrono::system_clock::now();
 				graphe.BronKerbosch(&P,&R,&X);
 				sec = std::chrono::system_clock::now() - start;
+				for(auto clique : graphe.getListe_clique()){
+					cout << "[ ";
+					for(auto sommet : clique){
+						cout << sommet << ", ";
+					}
+					cout << "]" << endl;
+				}
 				break;
 			case 2:
 				cout << "The cake is a lie" << endl;

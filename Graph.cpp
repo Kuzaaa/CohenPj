@@ -39,8 +39,8 @@ Graph::Graph(Graph* graphe,int e){
 	vector<vector<int>> newListe_voisins;
 	for(auto L: liste_voisins){
 		vector<int> newListe;
-		for(auto e : L){
-			auto result = find(correspondanceOrignFct.begin(), correspondanceOrignFct.end(), e);
+		for(auto i : L){
+			auto result = find(correspondanceOrignFct.begin(), correspondanceOrignFct.end(), i);
 		    if (result != correspondanceOrignFct.end()) {
 				newListe.push_back(e);
 			}
@@ -617,6 +617,10 @@ void Graph::maximal_clique_enumeration2(){
 
 double Graph::frand_0_1(){
 	return rand()/(double)RAND_MAX ;
+}
+
+std::vector<std::vector<int>> Graph::getListe_clique(){
+	return clique_maximal;
 }
 
 void Graph::affiche(){
