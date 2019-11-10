@@ -58,7 +58,6 @@ int main(){
 				for(int i=0; i<nb_sommet; i++){
 					P.push_back(i);
 				}
-				//graphe.degeneracy();
 				start = std::chrono::system_clock::now();
 				graphe.BronKerbosch(P,R,X);
 				sec = std::chrono::system_clock::now() - start;

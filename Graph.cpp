@@ -453,7 +453,7 @@ void Graph::bron_kerbosch_pivot(std::vector<int> P, std::vector<int> R, std::vec
 void Graph::maximal_clique_enumeration1(){
 	//dégénérescence + ordre de dégénérescence de G
 	degeneracy();
-
+	int alpha(0);
 	//liste d'adjacence dégénérée
 	liste_adj_degen();
 
@@ -465,14 +465,15 @@ void Graph::maximal_clique_enumeration1(){
 		Graph sous_graphe(this,list_degen[j]);
 
 		//cliques maximales de Gj
-		vector<int> P;
+		/*vector<int> P;
 		vector<int> R;
 		vector<int> X;
 		for(int i=0; i<sous_graphe.nb_sommet; i++){
 			P.push_back(i);
-		}
+		}*/
 
-		sous_graphe.BronKerbosch(P,R,X);
+		//sous_graphe.BronKerbosch(P,R,X);
+		sous_graphe.bron_kerbosch_degeneracy();
 
 		for(auto K : sous_graphe.clique_maximal){
 
@@ -505,20 +506,23 @@ void Graph::maximal_clique_enumeration1(){
 				}
 
 				//on print les cliques max
-				cout << "K : " << endl;
+				/*cout << "K : " << endl;
 				cout << "[ ";
 				for(auto sommet : k_ordonne){
 					cout << sommet << ", ";
 				}
-				cout << "]" << endl;
+				cout << "]" << endl;*/
+				alpha++;
 			}
 		}
 	}
+	cout << "alpha: " << alpha << endl;
 }
 
 void Graph::maximal_clique_enumeration2(){
 	//dégénérescence + ordre de dégénérescence de G
 	degeneracy();
+	int alpha(0);
 
 	//liste d'adjacence dégénérée
 	liste_adj_degen();
@@ -575,17 +579,19 @@ void Graph::maximal_clique_enumeration2(){
 					}
 				}
 				if(!reject_k){//on a pas trouvé de voisin de x adjacent à tous les sommets de K
-					cout << "K : " << endl;
+					/*cout << "K : " << endl;
 					cout << "[ ";
 					for(auto sommet : K_ok){
 						cout << sommet << ", ";
 					}
-					cout << "]" << endl;
+					cout << "]" << endl;*/
+					alpha++;
 					break;
 				}
 			}
 		}
 	}
+	cout << "alpha:" << alpha <<endl;
 }
 
 double Graph::frand_0_1(){
