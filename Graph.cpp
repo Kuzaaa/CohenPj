@@ -13,16 +13,20 @@ Graph::Graph(int n)  {
 	k_degen = 0;
 }
 
-Graph::Graph(Graph* graphe,int i){
-	k_degen = 0;
-	liste_voisins.push_back(graphe->liste_voisins[i]);
-	correspondanceOrignFct.push_back(i);
+//Permet de construire un sous sous-graphe a partir d'un Graphe graphe et d'un entier e
+Graph::Graph(Graph* graphe,int e){
 
-	//On stock tous les voisins inferieurs dans une liste.
-	//Avec leur indice, on peut retrouver leur valeur.
-	//De plus, on initialise les listes_voisins
-	for(auto voisin : graphe->liste_voisins[i]){
-		auto placeI = find(graphe->list_degen.begin(),graphe->list_degen.end(), i);
+	//On initialise k_degen
+	k_degen = 0;
+
+	//On récupère la liste de voisin de e, et on rentre sa valeur dans la liste de correspondance
+	liste_voisins.push_back(graphe->liste_voisins[e]);
+	correspondanceOrignFct.push_back(e);
+
+	//On stock tous les voisins qui sont situés après dans la liste de degenerescence.
+	//De plus, on recupere les listes_voisins de tout ceux-ci et on rentre leur valeur dans la liste de correspondance
+	for(auto voisin : graphe->liste_voisins[e]){
+		auto placeI = find(graphe->list_degen.begin(),graphe->list_degen.end(), e);
 		auto result = find(placeI, graphe->list_degen.end(), voisin);
 		if(result != graphe->list_degen.end()){
 			liste_voisins.push_back(graphe->liste_voisins[voisin]);
@@ -30,41 +34,43 @@ Graph::Graph(Graph* graphe,int i){
 		}
 	}
 
+	//On cree des nouvelles listes de voisins qui remplaceront celles copiees à l'initialisation
+	//Dont les seuls sommets gardes seront ceux dans la liste de correspondance
 	vector<vector<int>> newListe_voisins;
 	for(auto L: liste_voisins){
 		vector<int> newListe;
-		for(auto i : L){
-			auto result = find(correspondanceOrignFct.begin(), correspondanceOrignFct.end(), i);
+		for(auto e : L){
+			auto result = find(correspondanceOrignFct.begin(), correspondanceOrignFct.end(), e);
 		    if (result != correspondanceOrignFct.end()) {
-				newListe.push_back(i);
+				newListe.push_back(e);
 			}
 		}
 		newListe_voisins.push_back(newListe);
 	}
+	liste_voisins = newListe_voisins;
 
-
-
+	//On initialise nb_sommet
 	nb_sommet = (int) correspondanceOrignFct.size();
 
+	//On transforme la valeur des sommet afin que celle-ci corresponde à leur indice dans la liste de correspondance
 	for(int j=0;j<(int) newListe_voisins.size();j++){
 		for(int k=0;k<(int) newListe_voisins[j].size();k++){
 			auto result = find(correspondanceOrignFct.begin(),correspondanceOrignFct.end(), newListe_voisins[j][k]);
 			newListe_voisins[j][k] = distance(correspondanceOrignFct.begin(), result);
 		}
 	}
-
-	liste_voisins = newListe_voisins;
-
 }
 
 Graph::~Graph() {}
 
+//Transforme les valeurs des sommets d'un sous-graphe avec les valeurs correspondante du graphe
 void Graph::formatOrigin(vector<int>* liste,vector<int>* newListe){
 
+	//On remplace les valeurs de tous les sommets de la liste avec ceux de la liste de correspondance rempli au préalable
 	for(int k=0;k<(int) liste->size();k++){
 		newListe->push_back(correspondanceOrignFct[(*liste)[k]]);
 	}
-
+	//On vide la liste de correspondance pour le prochain sous-graphe
 	correspondanceOrignFct.clear();
 }
 
@@ -97,6 +103,7 @@ void Graph::generation_aleatoire1(){
 
 
 void Graph::generation_aleatoire2(){
+
 	double p, p_apparition;
 	int i(0), m(2), sommet, voisin, nb_tot_degres(0), deg[nb_sommet];
 	vector<int> voisins;
@@ -133,16 +140,17 @@ void Graph::generation_aleatoire2(){
 				p = frand_0_1();
 				cout << "sommet:" << sommet <<" voisin:" << voisin << " p_app=" << p_apparition << " p="<< p << endl;
 				if(p<p_apparition){
-					//On ajoute la nouvelle arête
+					//On ajoute la nouvelle arête dans les listes de voisins des sommets concernés
 					liste_voisins[voisin].push_back(sommet);
 					liste_voisins[sommet].push_back(voisin);
+					//On actualise les degrés des sommets et le nombre total de sommet
 					deg[sommet]++;
 					deg[voisin]++;
 					nb_tot_degres+=2;
 					i++;
 					//Si on a créé 2 nouvelles arêtes, on passe au sommet suivant
 					if(i==m){
-						voisin=sommet;
+						break;
 					}
 				}
 			}
@@ -162,7 +170,7 @@ void Graph::BronKerbosch(std::vector<int>* P, std::vector<int>* R, std::vector<i
 		clique_maximal.push_back(*R);
 	}
 
-	//Pour tous les sommets de P
+	//Tant qu'il y a des sommets
 	while (!P->empty()){
 		int sommet = (*P)[0];
 		std::vector<int> newP, newR, newX;
