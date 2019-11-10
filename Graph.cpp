@@ -312,24 +312,31 @@ void Graph::degeneracy(){
 
 
 void Graph::bron_kerbosch_degeneracy(){
-
-	int j;
-
+	degeneracy();
+	int cpt = 0, index;
 	for(auto i : list_degen){
-		std::vector<int> P;
-		std::vector<int> X;
+		vector<int> P;
+		vector<int> X;
 		for(auto sommet : liste_voisins[i]){
-			P.push_back(sommet);
-		}
-		j = 0;
-		for(auto voisins : liste_voisins){
-			for(auto sommet : voisins){
-				if(sommet == i){
-					X.push_back(j);
+			index = 0;
+
+			for (auto s_degen : list_degen){
+				//cout << "cpt: " << cpt << " index: " << index << " s_degen: " << s_degen << " i: " << i << " sommet: " << sommet << endl;
+				if(s_degen == sommet){
+					if(cpt < index){
+						P.push_back(sommet);
+					}
+					else{
+						X.push_back(sommet);
+					}
 				}
+				index++;
 			}
-			j++;
+
 		}
+
+		cpt++;
+		/*
 		//Print X et P au cas ou
 		cout << "i: " << i << endl;
 		cout << "P: ";
@@ -341,24 +348,12 @@ void Graph::bron_kerbosch_degeneracy(){
 		for(auto tmp : X){
 			cout << tmp;
 		}
-		cout << endl << endl;
-
-
+		cout << endl << endl;*/
 
 		//Later :
-		std::vector<int> R;
+		vector<int> R;
 		R.push_back(i);
 		bron_kerbosch_pivot(P, R, X);
-
-
-	}
-	cout << endl;
-	for(auto clique : clique_maximal){
-		cout << "[ ";
-		for(auto sommet : clique){
-			cout << sommet << ", ";
-		}
-		cout << "]" << endl;
 	}
 }
 
@@ -398,7 +393,7 @@ void Graph::bron_kerbosch_pivot(std::vector<int> P, std::vector<int> R, std::vec
 
 		//P/voisins(u)
 		int test;
-		std::vector<int> P_sans_voisins_u;
+		vector<int> P_sans_voisins_u;
 		for(auto p : P){
 			test = 1;
 			for(auto sommet : liste_voisins[best_pivot]){
@@ -411,69 +406,40 @@ void Graph::bron_kerbosch_pivot(std::vector<int> P, std::vector<int> R, std::vec
 			}
 		}
 
-		for(auto v : P_sans_voisins_u){
+		int v;
 
-			std::vector<int> P_n_voisins_v;
-			/*
-			for(auto sommet : liste_voisins[v]){
-				for(auto p : P){
-					if(sommet == p){
-						P_n_voisins_v.push_back(sommet);
-					}
-				}
-			}*/
+		while(!P_sans_voisins_u.empty()){
+			v = P_sans_voisins_u[0];
 
-			std::vector<int> X_n_voisins_v;
-			/*
-			for(auto sommet : liste_voisins[v]){
-				for(auto x : X){
-					if(sommet == x){
-						X_n_voisins_v.push_back(sommet);
-					}
-				}
-			}*/
-
-
+			vector<int> P_n_voisins_v;
 			//P⋂⌈(sommet)
 			for(auto i : P){
-				auto result = std::find(std::begin(liste_voisins.at(v)),std::end(liste_voisins.at(v)),i);
-				if (result != std::end(liste_voisins.at(v))){
+				auto result = find(begin(liste_voisins.at(v)),end(liste_voisins.at(v)),i);
+				if (result != end(liste_voisins.at(v))){
 					P_n_voisins_v.push_back(i);
 				}
 			}
 
+			vector<int> X_n_voisins_v;
 			//P⋂⌈(sommet)
 			for(auto i : X){
-				auto result = std::find(std::begin(liste_voisins.at(v)),std::end(liste_voisins.at(v)),i);
-				if (result != std::end(liste_voisins.at(v))){
+				auto result = find(begin(liste_voisins.at(v)),end(liste_voisins.at(v)),i);
+				if (result != end(liste_voisins.at(v))){
 					X_n_voisins_v.push_back(i);
 				}
 			}
 
-			R.push_back(v);
+			vector<int> newR = R;
+			newR.push_back(v);
 
-			cout << endl;
-			cout << "[ ";
-			for(auto sommet : R){
-				cout << sommet << ", ";
-			}
-			cout << "]" << endl;
-
-
-			bron_kerbosch_pivot(P_n_voisins_v, R, X_n_voisins_v);
+			bron_kerbosch_pivot(P_n_voisins_v, newR, X_n_voisins_v);
 
 
 			//P \ sommet
-			P.erase(std::remove(P.begin(),P.end(),v), P.end());
+			P.erase(remove(P.begin(), P.end(), v), P.end());
+			P_sans_voisins_u.erase(remove(P_sans_voisins_u.begin(), P_sans_voisins_u.end(), v), P_sans_voisins_u.end());
 			//X u sommet
 			X.push_back(v);
-			/*
-			for(auto it = P.begin(); it != P.end(); it++){
-				if(*it == v){
-					P.erase(it);
-				}
-			}
-			X.push_back(v);*/
 		}
 	}
 }

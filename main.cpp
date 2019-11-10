@@ -26,7 +26,7 @@ int main(){
 	vector<int> P,R,X;
 	std::chrono::system_clock::time_point start;
 	std::chrono::duration<double> sec;
-
+	srand(time(NULL));
 		do{
 			cout << "Entrer le nombre de sommets ( >= 1 ): ";
 			entree(nb_sommet);
@@ -70,9 +70,6 @@ int main(){
 				}
 				break;
 			case 2:
-				for(int i=0; i<nb_sommet; i++){
-					P.push_back(i);
-				}
 				start = std::chrono::system_clock::now();
 				graphe.bron_kerbosch_degeneracy();
 				sec = std::chrono::system_clock::now() - start;

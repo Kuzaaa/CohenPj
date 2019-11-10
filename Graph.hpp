@@ -27,10 +27,10 @@ private:
 	int k_degen;
 	std::vector<std::vector<int>> liste_adj_d;
 	std::vector<int> correspondanceOrignFct;
-	std::vector<std::vector<int>> clique_maximal;
+
 	int nb_sommet;
 public:
-
+	std::vector<std::vector<int>> clique_maximal;
 
     Graph(int n);
 	Graph(Graph* graphe, int e);//Construit un sous graphe avec i et voisins de i > i
