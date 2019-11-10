@@ -78,6 +78,8 @@ int main(){
 				cout << "You shouldn't be here..." << endl;
 		}
 
+		cout << "Temps d'execution: " << sec.count() << "secondes." << endl;
+
 		do{
 			cout << "Voulez-vous recommencer ?:\n(1)Oui\n(2)Quitter" << endl;
 			entree(choix);
