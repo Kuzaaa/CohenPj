@@ -621,6 +621,10 @@ double Graph::frand_0_1(){
 	return rand()/(double)RAND_MAX ;
 }
 
+std::vector<std::vector<int>> Graph::getListe_clique(){
+	return clique_maximal;
+}
+
 void Graph::affiche(){
 	for(auto voisins : liste_voisins){
 		cout << "[ ";

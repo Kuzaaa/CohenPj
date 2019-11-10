@@ -35,6 +35,7 @@ public:
     Graph(int n);
 	Graph(Graph* graphe, int e);//Construit un sous graphe avec i et voisins de i > i
     ~Graph();
+    std::vector<std::vector<int>> getListe_clique();
 	void formatOrigin(std::vector<int>* liste,std::vector<int>* newListe);
     void generation_aleatoire1();
 	void generation_aleatoire2();
