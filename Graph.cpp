@@ -546,6 +546,9 @@ void Graph::maximal_clique_enumeration2(){
 		Graph sous_graphe(this,list_degen[j]);
 
 		//clique maximales de Gj
+
+		//Appelle pour BronKerbosch standard
+
 		/*
 		vector<int> P;
 		vector<int> R;
@@ -553,6 +556,8 @@ void Graph::maximal_clique_enumeration2(){
 		for(int i=0; i<sous_graphe.nb_sommet; i++){
 			P.push_back(i);
 		}*/
+
+		//Appelle pour BronKerboschDegeneracy
 		sous_graphe.degeneracy();
 		sous_graphe.bron_kerbosch_degeneracy();
 
