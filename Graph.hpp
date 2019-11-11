@@ -17,8 +17,8 @@ struct VectorHash { //pour hasher des vector<int>
     }
 };
 
-/* graphe représenté par un vecteur de vecteurs,
- * T[i] contiendra les voisins du sommet i
+/* graphe represente par une liste d'adjacence,
+ * liste_voisins[i] contiendra les voisins du sommet i
  */
 class Graph {
 private:
@@ -27,21 +27,21 @@ private:
 	int k_degen;
 	std::vector<std::vector<int>> liste_adj_d;
 	std::vector<int> correspondanceOrignFct;
-
+	std::vector<std::vector<int>> clique_maximal;
 	int nb_sommet;
 public:
-	std::vector<std::vector<int>> clique_maximal;
 
     Graph(int n);
-	Graph(Graph* graphe, int e);//Construit un sous graphe avec i et voisins de i > i
-    ~Graph();
+	Graph(Graph* graphe, int e);
     std::vector<std::vector<int>> getListe_clique();
+    int get_k_degen();
 	void formatOrigin(std::vector<int>* liste,std::vector<int>* newListe);
     void generation_aleatoire1();
 	void generation_aleatoire2();
 	void BronKerbosch(std::vector<int> P, std::vector<int> R, std::vector<int> X);
     double frand_0_1();
     void affiche();
+    void affiche_liste_degen();
     void degeneracy();
     void bron_kerbosch_degeneracy();
     void bron_kerbosch_pivot(std::vector<int> P, std::vector<int> R, std::vector<int> X);
