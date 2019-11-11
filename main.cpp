@@ -44,7 +44,7 @@ int main(){
 		else
 			graphe.generation_aleatoire2();
 
-		//graphe.affiche();
+		graphe.affiche();
 
 		do{
 			cout << "Que voulez-vous faire ?:\n(1)Bron-Kerbosch\n(2)Bron-Kerbosch avec pivot"
@@ -61,35 +61,39 @@ int main(){
 				start = std::chrono::system_clock::now();
 				graphe.BronKerbosch(P,R,X);
 				sec = std::chrono::system_clock::now() - start;
-				/*for(auto clique : graphe.getListe_clique()){
+				for(auto clique : graphe.getListe_clique()){
 					cout << "[ ";
 					for(auto sommet : clique){
 						cout << sommet << ", ";
 					}
 					cout << "]" << endl;
-				}*/
+				}
 				break;
 			case 2:
 				start = std::chrono::system_clock::now();
+				graphe.degeneracy();
 				graphe.bron_kerbosch_degeneracy();
 				sec = std::chrono::system_clock::now() - start;
+				graphe.affiche_liste_degen();
 				for(auto clique : graphe.getListe_clique()){
-				cout << "[ ";
-				for(auto sommet : clique){
-					cout << sommet << ", ";
+					cout << "[ ";
+					for(auto sommet : clique){
+						cout << sommet << ", ";
+					}
+					cout << "]" << endl;
 				}
-				cout << "]" << endl;
-			}
 				break;
 			case 3:
 				start = std::chrono::system_clock::now();
 				graphe.maximal_clique_enumeration1();
 				sec = std::chrono::system_clock::now() - start;
+				cout << "k : " << graphe.get_k_degen() << endl;
 				break;
 			case 4:
 				start = std::chrono::system_clock::now();
 				graphe.maximal_clique_enumeration2();
 				sec = std::chrono::system_clock::now() - start;
+
 				break;
 			default:
 				cout << "You shouldn't be here..." << endl;
